@@ -10,6 +10,8 @@ public class Vehicle {
     private final String registration;
 
     private static final Pattern p = Pattern.compile("[a-zA-Z\\d\\-]{6,}+");
+    private static final Pattern p2 = Pattern.compile(".*[a-zA-Z].*");
+    private static final Pattern p3 = Pattern.compile(".*[\\d].*");
 
     public void checkRegistration(String registration) {
         if (registration == null || registration.isEmpty())
@@ -26,7 +28,9 @@ public class Vehicle {
     }
 
     public boolean seemsValidRegistration() {
-        return p.matcher(this.registration).matches();
+        return p.matcher(this.registration).matches() &&
+               p2.matcher(this.registration).matches() &&
+               p3.matcher(this.registration).matches();
     }
 
     @Override

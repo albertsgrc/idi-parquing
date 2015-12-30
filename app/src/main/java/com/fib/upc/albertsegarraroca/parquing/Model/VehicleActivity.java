@@ -18,9 +18,13 @@ public abstract class VehicleActivity {
         return this.date;
     }
 
+    public double getIncome() {
+        return 0.0;
+    }
+
     public abstract Vehicle getVehicle();
 
-    public abstract ParkingPlace getPlace();
+    public abstract String getPlace();
 
     @Override
     public abstract boolean equals(Object o);

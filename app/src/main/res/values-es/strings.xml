@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Parking</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="parking_place_short">Plaza</string>
+    <string name="type">Tipo</string>
+    <string name="date">Fecha</string>
+    <string name="registration">Matrícula</string>
+    <string name="benefit">Beneficio</string>
+    <string name="entry_date">Fecha de entrada</string>
+    <string name="exit_date">Fecha de salida</string>
+</resources>

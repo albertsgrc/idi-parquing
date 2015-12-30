@@ -18,20 +18,26 @@ public class VehicleExit extends VehicleActivity {
         super(date);
 
         if (associatedEntry == null) throw new NullPointerException();
-        if (income < 0) throw new IllegalArgumentException();
+        if (associatedEntry.getDate().after(getDate())) throw new IllegalArgumentException();
 
         this.associatedEntry = associatedEntry;
         this.income = income;
     }
-
     public VehicleExit(Date date, VehicleEntry associatedEntry) {
         this(date, associatedEntry, calculateIncome(associatedEntry.getDate(), date));
     }
 
-    private static double calculateIncome(Date entryDate, Date exitDate) {
-        double parkDurationInMillis = exitDate.getTime() - entryDate.getTime();
-        double parkDurationInMinutes = parkDurationInMillis/((double) MILLISECONDS_PER_MINUTE);
+    public int getStayTimeInMinutes() {
+        return calculateStayTimeInMinutes(associatedEntry.getDate(), getDate());
+    }
 
+    private static int calculateStayTimeInMinutes(Date entryDate, Date exitDate) {
+        double parkDurationInMillis = exitDate.getTime() - entryDate.getTime();
+        return (int) (parkDurationInMillis/((double) MILLISECONDS_PER_MINUTE));
+    }
+
+    public static double calculateIncome(Date entryDate, Date exitDate) {
+        int parkDurationInMinutes = calculateStayTimeInMinutes(entryDate, exitDate);
         return Utils.roundEuros(PRICE_PER_MINUTE*parkDurationInMinutes);
     }
 
@@ -39,12 +45,13 @@ public class VehicleExit extends VehicleActivity {
         return associatedEntry;
     }
 
+    @Override
     public double getIncome() {
         return income;
     }
 
     @Override
-    public ParkingPlace getPlace() {
+    public String getPlace() {
         return associatedEntry.getPlace();
     }
 
@@ -84,7 +91,7 @@ public class VehicleExit extends VehicleActivity {
         return "VehicleExit{" +
                 "date=" + getDate() +
                 ", associatedEntry=" + associatedEntry +
-                ", income=" + income +
+                ", accumulatedIncome=" + income +
                 '}';
     }
 }

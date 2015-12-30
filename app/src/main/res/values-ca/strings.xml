@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="app_name">Parquing</string>
+    <string name="app_name">Pàrquing</string>
     <string name="action_settings">Preferències</string>
     <string name="parking_place_short">Plaça</string>
     <string name="type">Tipus</string>
-    <string name="date">Data</string>
     <string name="registration">Matrícula</string>
     <string name="benefit">Benefici</string>
     <string name="entry_date">Data d\'entrada</string>
+    <string name="date">Data</string>
     <string name="exit_date">Data de sortida</string>
-
 </resources>

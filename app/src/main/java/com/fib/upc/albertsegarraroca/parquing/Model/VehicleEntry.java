@@ -7,10 +7,10 @@ import java.util.Date;
  */
 public class VehicleEntry extends VehicleActivity {
     private final Vehicle vehicle;
-    private final ParkingPlace place;
+    private final String place;
     private VehicleExit associatedExit;
 
-    public VehicleEntry(Date date, Vehicle vehicle, ParkingPlace place, VehicleExit associatedExit) {
+    public VehicleEntry(Date date, Vehicle vehicle, String place, VehicleExit associatedExit) {
         super(date);
 
         if (vehicle == null || place == null) throw new NullPointerException();
@@ -22,7 +22,7 @@ public class VehicleEntry extends VehicleActivity {
         this.associatedExit = associatedExit;
     }
 
-    public VehicleEntry(Date date, Vehicle vehicle, ParkingPlace place) {
+    public VehicleEntry(Date date, Vehicle vehicle, String place) {
         this(date, vehicle, place, null);
     }
 
@@ -32,29 +32,37 @@ public class VehicleEntry extends VehicleActivity {
     }
 
     @Override
-    public ParkingPlace getPlace() {
+    public String getPlace() {
         return place;
+    }
+
+    public void setAssociatedExit(VehicleExit v) {
+        this.associatedExit = v;
     }
 
     public Date getExitDate() {
         return this.associatedExit.getDate();
     }
 
-    public double getIncome() {
-        return this.associatedExit.getIncome();
-    }
-
     public VehicleExit getAssociatedExit() {
         return associatedExit;
     }
 
+    /*
     public void finish(VehicleExit associatedExit) {
         if (associatedExit == null) throw new NullPointerException();
         if (hasFinished()) throw new IllegalStateException();
         if (associatedExit.getAssociatedEntry() != this) throw new IllegalArgumentException();
 
         this.associatedExit = associatedExit;
-    }
+    }*/
+
+    /*
+    public void restart() {
+        if (!hasFinished()) throw new IllegalStateException();
+
+        this.associatedExit = null;
+    }*/
 
     public boolean hasFinished() {
         return associatedExit != null;
@@ -80,7 +88,6 @@ public class VehicleEntry extends VehicleActivity {
         int result = vehicle.hashCode();
         result = 31 * result + place.hashCode();
         result = 31 * result + getExitDate().hashCode();
-        result = 31 * result + ((Double)getIncome()).hashCode();
         result = 31 * result * getDate().hashCode();
         return result;
     }
@@ -91,8 +98,7 @@ public class VehicleEntry extends VehicleActivity {
                 "vehicle=" + vehicle +
                 ", place=" + place +
                 ", date=" + getDate() +
-                ", exitDate=" + getExitDate() +
-                ", income=" + getIncome() +
+                ", associatedExit=" + associatedExit +
                 '}';
     }
 }

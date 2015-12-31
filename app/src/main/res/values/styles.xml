@@ -9,13 +9,16 @@
 
     </style>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="@style/android:Theme.Light">
-        <item name="android:windowNoTitle">false</item>
-        <item name="android:windowTitleSize">60dip</item>
-        <item name="android:windowTitleBackgroundStyle">@style/WindowTitleBackground</item>
+    <style name="ActionBarTabs">
+        <item name="android:background">@drawable/tab_bar_background</item>
+        <item name="android:gravity">center_horizontal|center_vertical</item>
+    </style>
 
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="android:button">@style/custom_button</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTabs</item>
+        <item name="actionBarTabStyle">@style/ActionBarTabs</item>
     </style>
 
 

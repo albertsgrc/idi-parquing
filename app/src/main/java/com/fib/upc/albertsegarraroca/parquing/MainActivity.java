@@ -19,7 +19,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 import com.fib.upc.albertsegarraroca.parquing.Data.Database;
 import com.fib.upc.albertsegarraroca.parquing.Data.Files;
@@ -36,29 +38,57 @@ import java.util.List;
 import java.util.Vector;
 
 
-public class MainActivity extends TitleActivity
+public class MainActivity extends FragmentActivity
         implements PlacesFragment.OnFragmentInteractionListener,
                     SettingsFragment.OnFragmentInteractionListener,
-                    ActivitiesFragment.OnFragmentInteractionListener,
-                    TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener{
+                    ActivitiesFragment.OnFragmentInteractionListener {
 
     private static final int NUM_TABS = 3;
-
-    private TabHost mTabHost;
-    private ViewPager mViewPager;
-    private PagerAdapter mPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.initialiseTabHost(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        if (savedInstanceState != null)
-            mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
+        final ActionBar actionBar = getActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
 
-        this.intialiseViewPager();
+        final PagerAdapter mAdapter = new PagerAdapter(getSupportFragmentManager());
+        final ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(mAdapter);
 
+        mViewPager.setOnPageChangeListener(
+                new ViewPager.SimpleOnPageChangeListener() {
+                    @Override
+                    public void onPageSelected(int position) {
+                        // When swiping between pages, select the
+                        // corresponding tab.
+                        actionBar.setSelectedNavigationItem(position);
+                    }
+                });
+
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+            @Override
+            public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+                mViewPager.setCurrentItem(tab.getPosition());
+            }
+            @Override
+            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+            }
+            @Override
+            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+            }
+        };
+
+        addTab(0, tabListener);
+        addTab(1, tabListener);
+        addTab(2, tabListener);
 
         Preferences.getInstance().init(getApplicationContext());
 
@@ -101,8 +131,31 @@ public class MainActivity extends TitleActivity
 
     }
 
+    private void addTab(int pos, ActionBar.TabListener tabListener) {
+        ActionBar actionBar = getActionBar();
+
+        String title;
+        int icon;
+
+        switch(pos) {
+            case 0: title = "Places"; icon = R.drawable.ic_car; break;
+            case 1: title = "Activitat"; icon = R.drawable.ic_swap_vertical; break;
+            default: title = "Menú"; icon = R.drawable.ic_menu;
+        }
+
+        ActionBar.Tab tab = actionBar.newTab();
+        tab.setCustomView(R.layout.tab_layout);
+        ImageView iv = (ImageView) tab.getCustomView().findViewById(R.id.tab_icon);
+        iv.setImageResource(icon);
+        TextView tv = (TextView) tab.getCustomView().findViewById(R.id.tab_title);
+        tv.setText(title.toUpperCase());
+        tab.setTabListener(tabListener);
+
+        actionBar.addTab(tab);
+    }
+
     public static class PagerAdapter extends FragmentPagerAdapter {
-        public PagerAdapter(FragmentManager fm, List<Fragment> fragments) {
+        public PagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -119,102 +172,5 @@ public class MainActivity extends TitleActivity
                 default: return new PlacesFragment();
             }
         }
-
-        @Override
-        public CharSequence getPageTitle(int pos) {
-            switch(pos) {
-                case 0: return "Places";
-                case 1: return "Activitat";
-                default: return "Preferències";
-            }
-        }
-    }
-
-    /**
-     * A simple factory that returns dummy views to the Tabhost
-     * @author mwho
-     */
-    class TabFactory implements TabHost.TabContentFactory {
-
-        private final Context mContext;
-
-        /**
-         * @param context
-         */
-        public TabFactory(Context context) {
-            mContext = context;
-        }
-
-        /** (non-Javadoc)
-         * @see android.widget.TabHost.TabContentFactory#createTabContent(java.lang.String)
-         */
-        public View createTabContent(String tag) {
-            View v = new View(mContext);
-            return v;
-        }
-
-    }
-
-
-    /** (non-Javadoc)
-     * @see android.support.v4.app.FragmentActivity#onSaveInstanceState(android.os.Bundle)
-     */
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putString("tab", mTabHost.getCurrentTabTag()); //save the tab selected
-        super.onSaveInstanceState(outState);
-    }
-
-    /**
-     * Initialise ViewPager
-     */
-    private void intialiseViewPager() {
-
-        List<Fragment> fragments = new Vector<Fragment>();
-        fragments.add(Fragment.instantiate(this, PlacesFragment.class.getName()));
-        fragments.add(Fragment.instantiate(this, ActivitiesFragment.class.getName()));
-        fragments.add(Fragment.instantiate(this, SettingsFragment.class.getName()));
-        this.mPagerAdapter  = new PagerAdapter(super.getSupportFragmentManager(), fragments);
-        //
-        this.mViewPager = (ViewPager)super.findViewById(R.id.viewpager);
-        this.mViewPager.setAdapter(this.mPagerAdapter);
-        this.mViewPager.setOnPageChangeListener(this);
-    }
-
-    private void initialiseTabHost(Bundle args) {
-        mTabHost = (TabHost)findViewById(android.R.id.tabhost);
-        mTabHost.setup();
-
-        MainActivity.addTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab1").setIndicator("Tab 1"));
-        MainActivity.addTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab2").setIndicator("Tab 2"));
-        MainActivity.addTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab3").setIndicator("Tab 3"));
-
-        mTabHost.setOnTabChangedListener(this);
-    }
-
-
-    private static void addTab(MainActivity activity, TabHost tabHost, TabHost.TabSpec tabSpec) {
-        tabSpec.setContent(activity.new TabFactory(activity));
-        tabHost.addTab(tabSpec);
-    }
-
-    public void onTabChanged(String tag) {
-        int pos = this.mTabHost.getCurrentTab();
-        this.mViewPager.setCurrentItem(pos);
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset,
-                               int positionOffsetPixels) {
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        this.mTabHost.setCurrentTab(position);
-    }
-
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
     }
 }

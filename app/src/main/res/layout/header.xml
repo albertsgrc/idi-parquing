@@ -3,8 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="60dp"
     android:background="@color/headerNormal"
-    android:paddingEnd="0dp"
-    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
     android:paddingTop="0dp"
     android:paddingBottom="0dp">
 
@@ -54,7 +53,7 @@
             android:text="Sortida"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="2dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -62,8 +61,9 @@
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"
-        android:gravity="center_vertical">
+        android:layout_alignParentStart="false"
+        android:gravity="center_vertical"
+        android:layout_alignParentEnd="true">
 
         <TextView
             android:layout_width="wrap_content"
@@ -71,12 +71,13 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Ocupació"
             android:id="@+id/txtOccupationInfo"
-            android:textSize="15dp"
+            android:textSize="13dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
             android:textAlignment="gravity"
             android:gravity="center_horizontal"
-            android:textColor="#fffffcff" />
+            android:textColor="#fffffcff"
+            android:textAllCaps="true"/>
 
         <TextView
             android:layout_width="wrap_content"

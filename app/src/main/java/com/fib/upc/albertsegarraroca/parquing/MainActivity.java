@@ -1,10 +1,25 @@
 package com.fib.upc.albertsegarraroca.parquing;
 
+import android.app.ActionBar;
+import android.app.Activity;
+import android.app.FragmentTransaction;
+import android.content.Context;
+import android.net.Uri;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.PagerTabStrip;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.widget.TabHost;
 
 import com.fib.upc.albertsegarraroca.parquing.Data.Database;
 import com.fib.upc.albertsegarraroca.parquing.Data.Files;
@@ -16,116 +31,45 @@ import com.fib.upc.albertsegarraroca.parquing.Model.VehicleActivity;
 import com.fib.upc.albertsegarraroca.parquing.Model.VehicleActivityList;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Vector;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends TitleActivity
+        implements PlacesFragment.OnFragmentInteractionListener,
+                    SettingsFragment.OnFragmentInteractionListener,
+                    ActivitiesFragment.OnFragmentInteractionListener,
+                    TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener{
+
+    private static final int NUM_TABS = 3;
+
+    private TabHost mTabHost;
+    private ViewPager mViewPager;
+    private PagerAdapter mPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        this.initialiseTabHost(savedInstanceState);
+
+        if (savedInstanceState != null)
+            mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
+
+        this.intialiseViewPager();
+
 
         Preferences.getInstance().init(getApplicationContext());
 
         Database db = new Database(getApplicationContext());
-
         Parking parking = Parking.getInstance();
         parking.init(db);
-
-        parking.enterVehicle(new Vehicle("2372882"));
-
-        boolean b = parking.getVehicles().get(0).seemsValidRegistration();
-
-        parking.deactivatePlace("B1");
-
-        ParkingPlace newPlace = parking.enterVehicle(new Vehicle("2372882"));
-
-        parking.deactivatePlace("C1");
-        parking.activatePlace("B1");
-
-        boolean inside = parking.isInside(new Vehicle("2372882"));
-
-        try {
-            parking.undoLastActivity();
-        } catch (IllegalStateException e) {
-            Log.e("undo", "There was exception while undoing");
-        }
-
-
-        ParkingPlace occupyingPlace = parking.enterVehicle(new Vehicle("2734A23"));
-
-        boolean b3 = parking.getVehicles().get(0).seemsValidRegistration();
-
-        boolean b4 = parking.deactivatePlace(occupyingPlace.getId());
-
-        parking.exitVehicle(new Vehicle("2734A23"));
-
-        boolean b5 = parking.deactivatePlace(occupyingPlace.getId());
-
-        try {
-            parking.undoLastActivity();
-        } catch (IllegalStateException e) {
-            Log.e("undo", "Cannot undo");
-        }
-
-        parking.activatePlace(occupyingPlace.getId());
-
-        parking.undoLastActivity();
-
-        parking.exitVehicle(parking.getVehicles().get(0));
-
-        parking.enterVehicle(new Vehicle("fd"));
-        parking.enterVehicle(new Vehicle("dhawio"));
-        parking.exitVehicle(new Vehicle("dhawio"));
-
-        VehicleActivityList va = new VehicleActivityList(db);
 
         try {
             Files.getInstance().init();
         } catch (IOException e) {
             Log.e("FIles", "Error while creating folders");
-        }
-
-        try {
-            Files.getInstance().saveDocument("lamevallista.csv", va.toCsv("Tipus;Plaça;Data;Matrícula;Benefici"));
-            Files.getInstance().saveDocument("lamevallistaagrupada", va.toCsvGrouped("Plaça;Data d'entrada;Data de sortida;Matrícula;Benefici"));
-            Files.getInstance().saveDocument("elmeuhtml.html", va.toHtml("Mes;Benefici;Entrades;Sortides;Temps mitjà d'estada", "Resum", "table {\n" +
-                    "            font-family: Arial;\n" +
-                    "            border: 1px solid #999;\n" +
-                    "            empty-cells: show;\n" +
-                    "            border-collapse: collapse;\n" +
-                    "            border-spacing: 0;\n" +
-                    "        }\n" +
-                    "\n" +
-                    "        table td,\n" +
-                    "        table th {\n" +
-                    "            border-left: 1px solid #999;\n" +
-                    "            border-width: 0 0 0 1px;\n" +
-                    "            font-size: inherit;\n" +
-                    "            margin: 0;\n" +
-                    "            overflow: visible;\n" +
-                    "            padding: 0.5em 1em;\n" +
-                    "        }\n" +
-                    "\n" +
-                    "        table td {\n" +
-                    "            background-color: white;\n" +
-                    "        }\n" +
-                    "\n" +
-                    "        tbody tr td:first-child {\n" +
-                    "            font-weight: bold;\n" +
-                    "        }\n" +
-                    "\n" +
-                    "        thead {\n" +
-                    "            background-color: #ffaa00;\n" +
-                    "            color: black;\n" +
-                    "            text-align: left;\n" +
-                    "        }\n" +
-                    "\n" +
-                    "        tbody tr:nth-child(even) td {\n" +
-                    "            background-color: #e2e2e2;\n" +
-                    "        }"));
-        } catch (IOException e) {
-            Log.e("escriure", e.getMessage());
         }
     }
 
@@ -150,5 +94,127 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    public static class PagerAdapter extends FragmentPagerAdapter {
+        public PagerAdapter(FragmentManager fm, List<Fragment> fragments) {
+            super(fm);
+        }
+
+        @Override
+        public int getCount() {
+            return NUM_TABS;
+        }
+
+        @Override
+        public Fragment getItem(int pos) {
+            switch(pos) {
+                case 0: return new PlacesFragment();
+                case 1: return new ActivitiesFragment();
+                default: return new PlacesFragment();
+            }
+        }
+
+        @Override
+        public CharSequence getPageTitle(int pos) {
+            switch(pos) {
+                case 0: return "Places";
+                case 1: return "Activitat";
+                default: return "Preferències";
+            }
+        }
+    }
+
+    /**
+     * A simple factory that returns dummy views to the Tabhost
+     * @author mwho
+     */
+    class TabFactory implements TabHost.TabContentFactory {
+
+        private final Context mContext;
+
+        /**
+         * @param context
+         */
+        public TabFactory(Context context) {
+            mContext = context;
+        }
+
+        /** (non-Javadoc)
+         * @see android.widget.TabHost.TabContentFactory#createTabContent(java.lang.String)
+         */
+        public View createTabContent(String tag) {
+            View v = new View(mContext);
+            return v;
+        }
+
+    }
+
+
+    /** (non-Javadoc)
+     * @see android.support.v4.app.FragmentActivity#onSaveInstanceState(android.os.Bundle)
+     */
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString("tab", mTabHost.getCurrentTabTag()); //save the tab selected
+        super.onSaveInstanceState(outState);
+    }
+
+    /**
+     * Initialise ViewPager
+     */
+    private void intialiseViewPager() {
+
+        List<Fragment> fragments = new Vector<Fragment>();
+        fragments.add(Fragment.instantiate(this, PlacesFragment.class.getName()));
+        fragments.add(Fragment.instantiate(this, ActivitiesFragment.class.getName()));
+        fragments.add(Fragment.instantiate(this, SettingsFragment.class.getName()));
+        this.mPagerAdapter  = new PagerAdapter(super.getSupportFragmentManager(), fragments);
+        //
+        this.mViewPager = (ViewPager)super.findViewById(R.id.viewpager);
+        this.mViewPager.setAdapter(this.mPagerAdapter);
+        this.mViewPager.setOnPageChangeListener(this);
+    }
+
+    private void initialiseTabHost(Bundle args) {
+        mTabHost = (TabHost)findViewById(android.R.id.tabhost);
+        mTabHost.setup();
+
+        MainActivity.addTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab1").setIndicator("Tab 1"));
+        MainActivity.addTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab2").setIndicator("Tab 2"));
+        MainActivity.addTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab3").setIndicator("Tab 3"));
+
+        mTabHost.setOnTabChangedListener(this);
+    }
+
+
+    private static void addTab(MainActivity activity, TabHost tabHost, TabHost.TabSpec tabSpec) {
+        tabSpec.setContent(activity.new TabFactory(activity));
+        tabHost.addTab(tabSpec);
+    }
+
+    public void onTabChanged(String tag) {
+        int pos = this.mTabHost.getCurrentTab();
+        this.mViewPager.setCurrentItem(pos);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset,
+                               int positionOffsetPixels) {
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        this.mTabHost.setCurrentTab(position);
+    }
+
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

@@ -1,8 +1,22 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="WindowTitleBackground">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:padding">0px</item>
     </style>
+
+    <style name="custom_button">
+
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="@style/android:Theme.Light">
+        <item name="android:windowNoTitle">false</item>
+        <item name="android:windowTitleSize">60dip</item>
+        <item name="android:windowTitleBackgroundStyle">@style/WindowTitleBackground</item>
+
+        <item name="android:button">@style/custom_button</item>
+    </style>
+
 
 </resources>

@@ -1,8 +1,265 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.fib.upc.albertsegarraroca.parquing.PlacesFragment"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    tools:context="com.fib.upc.albertsegarraroca.parquing.PlacesFragment">
+    android:fillViewport="true">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:paddingBottom="40dp">
 
-    <!-- TODO: Update blank fragment layout -->
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/select_place"
+            android:id="@+id/txtSelectPlaces"
+            android:textSize="25sp"
+            android:textAlignment="gravity"
+            android:singleLine="false"
+            android:gravity="center_vertical|center_horizontal"
+            android:textColor="#ffffffff"
+            android:visibility="gone"
+            android:layout_marginTop="20dp"
+            android:layout_weight="0.8" />
 
-</FrameLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:visibility="visible"
+            android:id="@+id/layoutInfo"
+            android:baselineAligned="false"
+            android:layout_weight="0.8"
+            android:layout_marginTop="25dp">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="true"
+                    android:background="@color/background_hue">
+
+                    <include
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        layout="@layout/key_value_info"
+                        android:layout_weight="1.3"
+                        android:id="@+id/frameInfoId" />
+
+                    <include
+                        layout="@layout/key_value_info"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:id="@+id/frameInfoRegistration" />
+
+                    <include
+                        layout="@layout/key_value_info"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:id="@+id/frameInfoIncome" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="true"
+                    android:background="@color/background_hue"
+                    android:paddingBottom="5dp">
+
+                    <include
+                        layout="@layout/key_value_info"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/frameInfoState"
+                        android:layout_weight="1" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/btnInfoAction"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="8dp"
+                        android:focusableInTouchMode="false"
+                        android:background="@drawable/button_custom_special"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="10dp"
+                        android:clickable="true"
+                        android:enabled="true"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:layout_marginBottom="2dp"
+            android:baselineAligned="false">
+
+            <include
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                layout="@layout/place"
+                android:layout_weight="1"
+                android:id="@+id/A1"
+                android:layout_marginRight="2dp" />
+
+            <include
+                layout="@layout/place"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:layout_marginRight="2dp"
+                android:id="@+id/A2" />
+
+            <include
+                layout="@layout/place"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:layout_marginRight="2dp"
+                android:id="@+id/A3" />
+
+            <include
+                layout="@layout/place"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:id="@+id/A4" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:layout_marginBottom="2dp"
+            android:baselineAligned="false">
+
+            <include
+                layout="@layout/place"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:id="@+id/B1"
+                android:layout_marginRight="2dp" />
+
+            <include
+                layout="@layout/place"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:layout_marginRight="2dp"
+                android:id="@+id/B2" />
+
+            <include
+                layout="@layout/place"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:layout_marginRight="2dp"
+                android:id="@+id/B3" />
+
+            <include
+                layout="@layout/place"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:id="@+id/B4" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:layout_marginBottom="2dp"
+            android:baselineAligned="false">
+
+            <include
+                layout="@layout/place"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:id="@+id/C1"
+                android:layout_marginRight="2dp" />
+
+            <include
+                layout="@layout/place"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:layout_marginRight="2dp"
+                android:id="@+id/C2" />
+
+            <include
+                layout="@layout/place"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:layout_marginRight="2dp"
+                android:id="@+id/C3" />
+
+            <include
+                layout="@layout/place"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:id="@+id/C4" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:baselineAligned="false">
+
+            <include
+                layout="@layout/place"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:id="@+id/D1"
+                android:layout_marginRight="2dp" />
+
+            <include
+                layout="@layout/place"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:layout_marginRight="2dp"
+                android:id="@+id/D2" />
+
+            <include
+                layout="@layout/place"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:layout_marginRight="2dp"
+                android:id="@+id/D3" />
+
+            <include
+                layout="@layout/place"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:id="@+id/D4" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

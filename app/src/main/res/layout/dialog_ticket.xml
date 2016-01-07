@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/key_value_info"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/ticketPlaceInfo" />
+
+    <include
+        layout="@layout/key_value_info"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/ticketRegistrationInfo" />
+
+    <include
+        layout="@layout/key_value_info"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/ticketTimeEntryInfo" />
+
+    <include
+        layout="@layout/key_value_info"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/ticketTimeExitInfo" />
+
+    <include
+        layout="@layout/key_value_info"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/ticketIncomeInfo" />
+</LinearLayout>

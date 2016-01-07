@@ -2,15 +2,78 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/shadow" />
+
     <android.support.v4.view.ViewPager
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="60dp" />
     <include android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:id="@+id/bottom_bar"
         layout="@layout/header"/>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="38dp"
+        android:id="@+id/undoBar"
+        android:background="#49000000"
+        android:paddingStart="10dp"
+        android:layout_above="@+id/bottom_bar"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/undoText"
+            android:textColor="#ffffffff"
+            android:layout_centerVertical="true"
+            android:textSize="13sp"
+            android:text="ycyci" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/button_custom_warning"
+            android:clickable="true"
+            android:onClick="undoLastActivity"
+            android:visibility="visible">
+
+            <TextView
+                android:textAllCaps="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/undo"
+                android:id="@+id/textView4"
+                android:textSize="13sp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="45dp"
+                android:textColor="@color/white" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:id="@+id/imageView"
+                android:background="@drawable/ic_undo_variant"
+                android:layout_gravity="center_vertical|right"
+                android:layout_marginRight="5dp" />
+        </FrameLayout>
+
+    </RelativeLayout>
+
 </RelativeLayout>

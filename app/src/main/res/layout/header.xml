@@ -2,92 +2,90 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="60dp"
-    android:background="@color/headerNormal"
-    android:paddingEnd="10dp"
+    android:background="@color/bad"
     android:paddingTop="0dp"
-    android:paddingBottom="0dp">
+    android:paddingBottom="0dp"
+    android:id="@+id/globalContainer">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
+    <Button
+        android:layout_width="128dp"
         android:layout_height="match_parent"
-        android:layout_alignParentEnd="false"
-        android:layout_centerInParent="true">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/btnNewEntry"
-            android:layout_gravity="start|center_vertical"
-            android:drawableTop="@drawable/ic_plus"
-            android:focusableInTouchMode="false"
-            android:focusable="false"
-            android:clickable="true"
-            android:textSize="14sp"
-            style="?android:attr/borderlessButtonStyle"
-            android:textColor="#fff7fcff"
-            android:background="@drawable/button_custom"
-            android:enabled="true"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:text="Entrada"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/btnNewExit"
-            android:layout_gravity="start|center_vertical"
-            android:drawableTop="@drawable/ic_minus"
-            android:focusableInTouchMode="false"
-            android:focusable="false"
-            android:clickable="true"
-            android:textSize="14sp"
-            style="?android:attr/borderlessButtonStyle"
-            android:textColor="#fff7fcff"
-            android:background="@drawable/button_custom"
-            android:enabled="true"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:text="Sortida"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:layout_marginLeft="2dp" />
-    </LinearLayout>
+        android:id="@+id/btnNewEntry"
+        android:layout_gravity="start|center_vertical"
+        android:drawableTop="@drawable/ic_enter"
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+        android:clickable="true"
+        android:textSize="14sp"
+        style="?android:attr/borderlessButtonStyle"
+        android:textColor="#fff7fcff"
+        android:background="@drawable/button_custom"
+        android:enabled="true"
+        android:text="@string/entry"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_alignParentStart="true" />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="false"
         android:gravity="center_vertical"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="false"
+        android:layout_marginEnd="33dp"
+        android:id="@+id/linearLayout2"
+        android:layout_centerHorizontal="true">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Ocupació"
-            android:id="@+id/txtOccupationInfo"
+            android:text="@string/occupation"
+            android:id="@+id/txtOccupation"
             android:textSize="13dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
             android:textAlignment="gravity"
             android:gravity="center_horizontal"
             android:textColor="#fffffcff"
-            android:textAllCaps="true"/>
+            android:textAllCaps="true"
+            android:ellipsize="middle" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="10/10"
-            android:id="@+id/txtOccupation"
+            android:id="@+id/txtOccupationInfo"
             android:layout_gravity="center_horizontal"
             android:textSize="18dp"
             android:textStyle="bold"
             android:textColor="#fff7fcff" />
     </LinearLayout>
+
+    <Button
+        android:layout_width="128dp"
+        android:layout_height="match_parent"
+        android:id="@+id/btnNewExit"
+        android:layout_gravity="start|center_vertical"
+        android:drawableTop="@drawable/ic_exit"
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+        android:clickable="true"
+        android:textSize="14sp"
+        style="?android:attr/borderlessButtonStyle"
+        android:textColor="#fff7fcff"
+        android:background="@drawable/button_custom"
+        android:enabled="true"
+        android:text="@string/exit"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" />
 
 </RelativeLayout>

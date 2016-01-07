@@ -16,6 +16,7 @@
         p1:layout_marginTop="4dp"
         p1:paddingTop="1dp" />
     <TextView
+        p1:textAllCaps="true"
         p1:text="Menu"
         p1:layout_width="wrap_content"
         p1:layout_height="wrap_content"

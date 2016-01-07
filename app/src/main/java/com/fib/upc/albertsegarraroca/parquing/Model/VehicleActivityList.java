@@ -20,20 +20,21 @@ import java.util.TimeZone;
 public class VehicleActivityList {
     private final ArrayList<VehicleActivity> list;
     private double totalIncome;
+    private int entries;
+    private int exits;
 
     private static final char CSV_SEPARATOR = ';';
 
-    public VehicleActivityList(ArrayList<VehicleActivity> list, double totalIncome) {
-        if (totalIncome < 0) throw new IllegalArgumentException();
-        if (list == null) throw new NullPointerException();
+    public VehicleActivityList(Database.ActivityListInfo info) {
+        if (info.totalIncome < 0) throw new IllegalArgumentException();
+        if (info.list == null) throw new NullPointerException();
 
-        this.list = list;
-        this.totalIncome = totalIncome;
+        this.list = info.list;
+        this.totalIncome = info.totalIncome;
+        this.entries = info.entries;
+        this.exits = info.exits;
     }
 
-    public VehicleActivityList(ArrayList<VehicleActivity> list) {
-        this(list, computeTotalIncome(list));
-    }
 
     public VehicleActivityList(Database db, Date beggining, Date end) {
         this(db.getActivitiesBetween(Utils.dateToDBString(beggining), Utils.dateToDBString(end)));
@@ -43,27 +44,15 @@ public class VehicleActivityList {
         this(db, Utils.getTodays00time(), new Date());
     }
 
-    private static double computeTotalIncome(ArrayList<VehicleActivity> list) {
-        double sum = 0;
-
-        for (int i = 0; i < list.size(); ++i) sum += list.get(i).getIncome();
-
-        return Utils.roundEuros(sum); // En teoría no hace falta, pero por si las moscas
-    }
-
-    /*
-    // Throws if a's time is before last activity's time
-    public void addActivity(VehicleActivity a) throws IllegalStateException {
-        if (a == null) throw new NullPointerException();
-        if (!list.isEmpty() && a.getDate().before(getLastActivity().getDate()))
-            throw new IllegalStateException();
-
-        list.add(a);
-        totalIncome += a.getIncome();
-    }*/
 
     public ArrayList<VehicleActivity> getList() {
         return this.list;
+    }
+
+    public int getTotalEntries() { return this.entries; }
+
+    public int getTotalExits() {
+         return this.exits;
     }
 
     public double getTotalIncome() {

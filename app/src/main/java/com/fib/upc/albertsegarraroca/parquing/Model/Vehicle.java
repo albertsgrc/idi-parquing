@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 public class Vehicle {
     private final String registration;
 
-    private static final Pattern p = Pattern.compile("[a-zA-Z\\d\\-]{6,}+");
+    private static final Pattern p = Pattern.compile("[a-zA-Z\\s\\d\\-]{6,}+");
     private static final Pattern p2 = Pattern.compile(".*[a-zA-Z].*");
     private static final Pattern p3 = Pattern.compile(".*[\\d].*");
 
@@ -20,7 +20,7 @@ public class Vehicle {
 
     public Vehicle(String registration) throws IllegalArgumentException {
         checkRegistration(registration);
-        this.registration = registration;
+        this.registration = registration.replace("\n", "").trim().toUpperCase();
     }
 
     public String getRegistration() {

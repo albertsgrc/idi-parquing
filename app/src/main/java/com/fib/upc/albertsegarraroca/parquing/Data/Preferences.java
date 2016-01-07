@@ -25,16 +25,11 @@ public class Preferences {
         settingsPrefs = applicationContext.getSharedPreferences("settings", Context.MODE_PRIVATE);
     }
 
-
-    public void setLastActivityDate(String date) {
-        SharedPreferences.Editor e = dataPrefs.edit();
-
-        e.putString("lastActivityDate", date);
-
-        e.apply();
+    public void setRegistrationValidation(boolean validate) {
+        settingsPrefs.edit().putBoolean("registrationValidation", validate).apply();
     }
 
-    public String getLastActivityDate() {
-        return dataPrefs.getString("lastActivityDate", null);
+    public boolean registrationValidation() {
+        return settingsPrefs.getBoolean("registrationValidation", false);
     }
 }

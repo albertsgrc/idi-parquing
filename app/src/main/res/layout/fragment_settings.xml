@@ -1,10 +1,116 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.fib.upc.albertsegarraroca.parquing.SettingsFragment">
+    tools:context="com.fib.upc.albertsegarraroca.parquing.MenuFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true">
+
+        <Button
+            android:drawableRight="@drawable/ic_delete"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btnReset"
+            android:id="@+id/btnReset"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/button_custom_warning"
+            android:layout_marginBottom="10dp"
+            android:textAlignment="gravity"
+            android:gravity="left|center_vertical"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:clickable="true" />
+
+        <Button
+            android:drawableRight="@drawable/ic_undo_variant"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btnUndo"
+            android:id="@+id/btnUndo"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/button_custom_warning"
+            android:layout_marginBottom="35dp"
+            android:textAlignment="gravity"
+            android:gravity="left|center_vertical"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:clickable="true" />
+
+        <Button
+            android:drawableRight="@drawable/ic_stats"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btnStats"
+            android:id="@+id/btnStats"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/button_custom_special"
+            android:layout_marginBottom="10dp"
+            android:textAlignment="gravity"
+            android:gravity="left|center_vertical"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp" />
+
+        <Button
+            android:drawableRight="@drawable/ic_calendar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btnSummary"
+            android:id="@+id/btnSummary"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/button_custom_special"
+            android:layout_marginBottom="35dp"
+            android:textAlignment="gravity"
+            android:gravity="left|center_vertical"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp" />
+
+        <Button
+            android:drawableRight="@drawable/ic_help"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btnHelp"
+            android:id="@+id/btnHelp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/button_custom_special"
+            android:layout_marginBottom="10dp"
+            android:textAlignment="gravity"
+            android:gravity="left|center_vertical"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp" />
+
+        <Button
+            android:drawableRight="@drawable/ic_information_outline"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btnAbout"
+            android:id="@+id/btnAbout"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/button_custom_special"
+            android:textAlignment="gravity"
+            android:gravity="left|center_vertical"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_marginBottom="35dp" />
+
+        <Button
+            android:drawableRight="@drawable/ic_settings"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btnSettings"
+            android:id="@+id/btnSettings"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/button_custom_special"
+            android:textAlignment="gravity"
+            android:gravity="left|center_vertical"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_marginBottom="10dp" />
+    </LinearLayout>
+
+</RelativeLayout>

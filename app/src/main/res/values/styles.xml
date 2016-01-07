@@ -14,12 +14,74 @@
         <item name="android:gravity">center_horizontal|center_vertical</item>
     </style>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <item name="android:button">@style/custom_button</item>
-        <item name="android:actionBarTabStyle">@style/ActionBarTabs</item>
-        <item name="actionBarTabStyle">@style/ActionBarTabs</item>
+
+
+    <!-- Local copy of android:Theme.Holo.Dialog.Alert -->
+    <style name="dialogAlert">
+        <item name="android:windowBackground">@drawable/dialog_background_inset</item>
+        <item name="android:windowTitleStyle">@style/dialogWindowTitle</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
+        <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
+        <item name="android:buttonBarButtonStyle">@style/dialogButton</item>
+        <item name="android:buttonBarStyle">@style/dialogButtonBar</item>
+        <item name="android:buttonStyle">@style/dialogButton</item>
     </style>
+
+    <style name="dialogWindowTitle"  parent="android:Widget.TextView">
+        <item name="android:maxLines">1</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="textAppearanceListItem">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="dialogTitleBackground">
+        <item name="android:background">@color/background</item>
+    </style>
+
+    <style name="dialogButtonBar" parent="@android:style/Holo.ButtonBar.AlertDialog">
+        <item name="android:background">@color/background</item>
+    </style>
+
+    <style name="dialogButton" parent="@android:style/Widget.Holo.Button.Borderless">
+        <item name="android:background">@drawable/button_custom</item>
+    </style>
+
+    <style name="dialogTitleStyle" parent="@android:style/TextAppearance.Holo.DialogWindowTitle">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@color/background</item>
+    </style>
+
+    <style name="dialogStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:fullDark">@color/background</item>
+        <item name="android:topDark">@color/background</item>
+        <item name="android:centerDark">@color/background</item>
+        <item name="android:bottomDark">@color/background</item>
+        <item name="android:fullBright">@color/background</item>
+        <item name="android:topBright">@color/background</item>
+        <item name="android:centerBright">@color/background</item>
+        <item name="android:bottomBright">@color/background</item>
+        <item name="android:bottomMedium">@color/background</item>
+        <item name="android:centerMedium">@color/background</item>
+    </style>
+
+    <style name="AppTheme" parent="android:Theme.Holo">
+        <item name="android:button">@style/custom_button</item>
+
+        <item name="android:actionBarDivider">@drawable/tab_divider</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTabs</item>
+
+        <item name="android:alertDialogTheme">@style/dialogAlert</item>
+        <item name="android:alertDialogStyle">@style/dialogStyle</item>
+    </style>
+
 
 
 </resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@color/transparent"
+    android:insetRight="20dp"
+    android:insetLeft="20dp"
+    android:insetBottom="60dp"
+    android:insetTop="60dp"/>

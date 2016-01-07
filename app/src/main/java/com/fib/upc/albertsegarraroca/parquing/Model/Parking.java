@@ -28,10 +28,10 @@ public class Parking {
 
     private Database db;
 
-    private static final int PLACES_PER_SECTION = 5;
+    private static final int PLACES_PER_SECTION = 4;
     private static final char FIRST_SECTION_CHAR = 'A';
 
-    private static final int SIZE = 20;
+    private static final int SIZE = 16;
 
     public void init(Database db) {
         this.places = db.getPlaces();
@@ -41,29 +41,27 @@ public class Parking {
     }
 
     public void reset() {
-        this.places = new ArrayList<>(SIZE);
+        this.places = new ArrayList<ParkingPlace>(SIZE);
 
-        ArrayList<String> ids = new ArrayList<>();
+        ArrayList<String> ids = new ArrayList<String>();
 
         for (int i = 0; i < SIZE; ++i) {
             this.places.add(new ParkingPlace(getPlaceId(i)));
             ids.add(getPlaceId(i));
         }
 
-        db.resetPlaces(ids);
+        db.resetParking(ids);
     }
 
     // Throws if an exit is undone and the corresponding place has been marked unactive
-    public void undoLastActivity() throws IllegalStateException {
-        String lastActivityDate = Preferences.getInstance().getLastActivityDate();
+    private VehicleActivity undoLastActivity(boolean force) throws IllegalStateException {
+        VehicleActivity va = db.undoLastActivity(force);
 
-        Assert.assertNotNull(lastActivityDate);
 
-        if (lastActivityDate == null) return;
+        if (va == null) return null;
 
-        VehicleActivity va = db.undoLastActivity(lastActivityDate);
-
-        if (va == null) return;
+        if (force && va.getClass() == VehicleExit.class && !getPlace(va.getPlace()).isActive())
+            activatePlace(va.getPlace());
 
         int index = getPlaceIndex(va.getPlace());
 
@@ -75,7 +73,15 @@ public class Parking {
             places.set(index, new ParkingPlace(va.getPlace(), va.getVehicle(), ((VehicleExit) va).getEntryDate(), true));
         }
 
-        Preferences.getInstance().setLastActivityDate(null);
+        return va;
+    }
+
+    public VehicleActivity undoLastActivity() throws IllegalStateException {
+        return undoLastActivity(false);
+    }
+
+    public VehicleActivity undoLastActivityForced() {
+        return undoLastActivity(true);
     }
 
     private int getPlaceIndex(String id) {
@@ -107,7 +113,7 @@ public class Parking {
     }
 
     public ArrayList<Vehicle> getVehicles() {
-        ArrayList<Vehicle> vehicles = new ArrayList<>();
+        ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
 
         for (ParkingPlace p : places)
             if (p.isOccupied()) vehicles.add(p.getOcuppyingVehicle());
@@ -151,19 +157,24 @@ public class Parking {
         db.occupyPlace(freePlace.getId(), vehicle.getRegistration(), Utils.dateToDBString(entryDate));
         freePlace.occupy(vehicle, entryDate);
 
-        Preferences.getInstance().setLastActivityDate(Utils.dateToDBString(entryDate));
-
         return freePlace;
     }
 
+    public int countActivePlaces() {
+        int c = 0;
+        for (ParkingPlace p : places)
+            if (p.isActive()) ++c;
+        return c;
+    }
+
     // Throws if now is before the associated entry's date
-    public boolean exitVehicle(Vehicle vehicle) throws IllegalStateException {
+    public VehicleExit exitVehicle(Vehicle vehicle) throws IllegalStateException {
         if (vehicle == null) throw new NullPointerException();
         Date exitDate = new Date();
 
         ParkingPlace vehiclePlace = getVehiclePlace(vehicle);
 
-        if (vehiclePlace == null) return false;
+        if (vehiclePlace == null) return null;
 
         Date associatedEntryDate = vehiclePlace.getLastEntranceDate();
 
@@ -173,14 +184,12 @@ public class Parking {
 
         double income = VehicleExit.calculateIncome(associatedEntryDate, exitDate);
 
-        db.freePlace(vehiclePlace.getId(), Utils.dateToDBString(exitDate), income,
+        VehicleExit exit = db.freePlace(vehiclePlace.getId(), Utils.dateToDBString(exitDate), income,
                      Utils.dateToDBString(associatedEntryDate));
 
         vehiclePlace.free();
 
-        Preferences.getInstance().setLastActivityDate(Utils.dateToDBString(exitDate));
-
-        return true;
+        return exit;
     }
 
     public ParkingPlace getVehiclePlace(Vehicle vehicle) {

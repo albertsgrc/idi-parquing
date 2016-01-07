@@ -44,6 +44,10 @@ public class ParkingPlace {
         this.lastEntranceDate = null;
     }
 
+    public double getCurrentIncome() {
+        return VehicleExit.calculateIncome(lastEntranceDate, new Date());
+    }
+
     public boolean isOccupied() {
         return this.vehicle != null;
     }

@@ -252,7 +252,7 @@ public class RevenueFragment extends Fragment {
         if (lastSize > 0) {
             firstActivity = list.get(0).getDate().getTime();
         }
-        else if (finalDate >= initialDate) showMessage(getString(R.string.no_activities));
+        else if (finalDate == null || initialDate == null || finalDate >= initialDate) showMessage(getString(R.string.no_activities));
 
         final ListView lv = (ListView) view.findViewById(R.id.listView);
 

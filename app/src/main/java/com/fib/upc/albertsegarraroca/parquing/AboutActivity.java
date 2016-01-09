@@ -38,12 +38,6 @@ public class AboutActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        switch(id) {
-            case android.R.id.home:
-                this.finish();
-                return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 }

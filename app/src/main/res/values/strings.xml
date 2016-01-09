@@ -60,7 +60,7 @@
     <string name="undo_entry_complete">Entry successfully undone</string>
     <string name="undo_exit_complete">Exit successfully undone</string>
     <string name="btnSettings">Settings</string>
-    <string name="select_dates">Select the time interval to check</string>
+    <string name="select_dates">Select a time interval to see its entries/exits and the total income</string>
     <string name="select_initial_date_dialog_title">Select the initial date and time</string>
     <string name="select_final_date_dialog_title">Select the final date and time</string>
     <string name="nothing_to_reload">There are no changes</string>
@@ -94,16 +94,47 @@
     <string name="showing_today">Showing today\'s activity</string>
     <string name="showing_dates">Showing from _X_ to _Y_</string>
     <string name="warning_undo">The following activity will be undone</string>
-    <string name="unblock">Unlock</string>
+    <string name="unblock">Unblock</string>
     <string name="css" translatable="false">table {\n            font-family: Arial;\n            border: 1px solid #999;\n            empty-cells: show;\n            border-collapse: collapse;\n            border-spacing: 0;\n        }\n\n        table td,\n        table th {\n        border-left: 1px solid #999;\n            border-width: 0 0 0 1px;\n            font-size: inherit;\n            margin: 0;\n            overflow: visible;\n            padding: 0.5em 1em;\n        }\n\n        table td {\n            background-color: white;\n        }\n\n        tbody tr td:first-child {\n            font-weight: bold;\n        }\n\n        thead {\n            background-color: #34495E;\n            color: white;\n            text-align: left;\n        }\n\n        tbody tr:nth-child(even) td {\n            background-color: #e2e2e2;\n        }</string>
     <string name="error">Error</string>
     <string name="incorrect_code">The codes don\'t match</string>
     <string name="warning_reset">Are you sure you want to reset the Parking?\n\nNote that _X_ALL THE DATA WILL BE ERASED_Y_, including the entry/exit record. If you still wish to reset the parking, enter the following confirmation code:</string>
     <string name="parking_reseted">Parking reseted successfully</string>
     <string name="about_application">About the application</string>
-    <string name="about_author">About the author</string><string name="about_application_text">This application is targeted to use in public parkings of small capacity,
+    <string name="about_author">About the author</string><string name="about_application_text">This application is targeted to use in parkings of small capacity,
 to help the parking operator manage the vehicle entries and exits, and
 to be able to obtain statistics and data about the activity and the money
 income obtained.</string>
     <string name="about_author_text" translatable="false">Albert Segarra Roca</string>
+    <string name="error_time_changed">It seems that you\'ve changed youre phone\'s clock time to the past. This application is not compatible with such time changes, please, adjust your phone time correctly or reset the parking in the menu tab.</string>
+    <string name="database_error">An error occurred while writing to the application\'s database. Please check that you\'ve got space left on your phone or try to restart the application</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="dialog_how_stats_title">Choose an option</string>
+    <string name="dialog_how_stats_txt">Do you want to group the pairs entry/exit in the same row?</string>
+    <string name="not_finished">Hasn\'t exited yet</string>
+    <string name="title_what_can_i_do">What can I do with this application?</string>
+    <string name="title_add_activity">How can I register a vehicle entry/exit?</string>
+    <string name="title_undo_activity">How can I undo the last vehicle entry/exit?</string>
+    <string name="title_see_place">How can I see the status and info of a place?</string>
+    <string name="title_block_place">What happens if a block a place?</string>
+    <string name="title_what_means_id">What do tags like A1 or D3 mean?</string>
+    <string name="title_where_are_files_saved">Where do data and summary downloaded files get saved?</string>
+    <string name="title_see_more_info">How can I see more info of the entry/exit list items?</string>
+    <string name="title_why_registration_uppercase">Why is the registration displayed in uppercase?</string>
+    <string name="title_how_open_files">How can I open the data and monthly summary downloaded files?</string>
+    <string name="title_colors">What does each color mean?</string>
+    <string name="text_what_can_i_do">With this application you can register the entry and exit of vehicles in the parking, check the occupation of the parking, check the state and information of its places, see an history of its vehicle entries en exits in a determined time interval, see the income and the entries and exits done during a determined time interval, undo the last entry/exit, download data of the parking to perform studies with excel and download a monthly summary of the parking income to see in a web browser.</string>
+    <string name="text_add_activity">You can register new entries and exits with the bar located at the bottom of the screen. The left-sided button is used to register new entries, whereas the right button is used to register new exits. In order to register a new entry you\'ll have to write the registration of the entrying car, but it\'s not necessary to write it in uppercase, the application will do it for you!\n</string>
+    <string name="text_see_place">You can check the state and information of a place in the tab \'places\'. You only need to select a place in the squared button table that appears in it, and you\'ll see the information appear just on top of the table. Also, the colors and the icons of the buttons indicate the state of the placee. The red color indicates that the place is occupied, the green color indicates that it is free and the grey color indicates that it is blocked. In the case of the occupied places, the text that appears just at the bottom of the icon is the registration of the vehicle which occupies the place.</string>
+    <string name="text_see_activities">You can see the entries and exits and the accumulated income by clicking on the tab \'income\'. You only need to indicate the initial moment and the final moment by pressing on the buttons of the top bar, or press the checkbox to see the ones of today from 00:00 to that moment. The accumulated income and the entry/exit list of this time interval will appear just below the bar.</string>
+    <string formatted="false" name="text_colors">The colors of the bottom bar indicate the parking occupation level. When its green it means that the occupation is just below 25%, when it\'s blue it means just below 50%, when it\'s orange below 75% and when its red below 100% included.</string>
+    <string name="text_block_place">Locking a place means preventing any vehicle from occupying it. It does indeed mean that the parking capacity gets reduced by one place.</string>
+    <string name="text_what_means_id">A1 or D3 are place identifiers. The letter indicates its row in the table and the number indicates its column.</string>
+    <string name="text_where_are_files_saved">The files are saved in the Downloads folder of your device. Try to start the Downloads application to find the downloaded file.</string>
+    <string name="text_see_more_info">In order to see more information about an element in the entry/exit list you can press on it.</string>
+    <string name="text_why_registration_uppercase">The registrations are converted to uppercase because all the registration formats follow this convention.</string>
+    <string name="text_how_open_files">In order to open the data file in csv format you can use Excel or OpenOffice. In order to open the file in html format with the monthly summary you can use any web browser.</string>
+    <string name="title_see_activities">How can I view the parking entries/exits and the money income?</string>
+    <string name="text_undo_activity">You can undo an entry/exit of a vehicle in three different ways. In the case of an entry, just after you\'ve registered a grey bar appears just on top of the bottom bar which allows you to undo it. In the case of an exit, when the ticket is shown you can find a button on the right which allows you to undo it. You can also do that in any moment with the 2nd button of the menu tab: Don\'t worry, you will be shown a warning with the activity that\'s going to be undone.</string>
 </resources>

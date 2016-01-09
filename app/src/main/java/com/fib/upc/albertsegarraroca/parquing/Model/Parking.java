@@ -2,8 +2,7 @@ package com.fib.upc.albertsegarraroca.parquing.Model;
 
 import com.fib.upc.albertsegarraroca.parquing.Data.Database;
 
-import junit.framework.Assert;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -28,14 +27,14 @@ public class Parking {
 
     private static final int SIZE = 16;
 
-    public void init(Database db) {
+    public void init(Database db) throws IOException {
         this.places = db.getPlaces();
         this.db = db;
 
         if (this.places.size() != SIZE) reset();
     }
 
-    public void reset() {
+    public void reset() throws IOException {
         this.places = new ArrayList<ParkingPlace>(SIZE);
 
         ArrayList<String> ids = new ArrayList<String>();
@@ -49,7 +48,7 @@ public class Parking {
     }
 
     // Throws if an exit is undone and the corresponding place has been marked unactive
-    private VehicleActivity undoLastActivity(boolean force) throws IllegalStateException {
+    private VehicleActivity undoLastActivity(boolean force) throws IllegalStateException, IOException {
         VehicleActivity va = db.undoLastActivity(force);
 
 
@@ -64,7 +63,6 @@ public class Parking {
             places.get(index).free();
         }
         else {
-            Assert.assertEquals(places.get(index).isActive(), true);
             places.set(index, new ParkingPlace(va.getPlace(), va.getVehicle(), ((VehicleExit) va).getEntryDate(), true));
         }
 
@@ -73,11 +71,11 @@ public class Parking {
 
     public VehicleActivity getLastActivity() { return db.getLastActivity(); }
 
-    public VehicleActivity undoLastActivity() throws IllegalStateException {
+    public VehicleActivity undoLastActivity() throws IllegalStateException, IOException {
         return undoLastActivity(false);
     }
 
-    public VehicleActivity undoLastActivityForced() {
+    public VehicleActivity undoLastActivityForced() throws IOException {
         return undoLastActivity(true);
     }
 
@@ -140,7 +138,7 @@ public class Parking {
 
     // Returns null if vehicle is inside
     // Returns its new place otherwise
-    public ParkingPlace enterVehicle(Vehicle vehicle) {
+    public ParkingPlace enterVehicle(Vehicle vehicle) throws IOException {
         if (vehicle == null) throw new NullPointerException();
 
         if (isInside(vehicle)) return null;
@@ -165,7 +163,7 @@ public class Parking {
     }
 
     // Throws if now is before the associated entry's date
-    public VehicleExit exitVehicle(Vehicle vehicle) throws IllegalStateException {
+    public VehicleExit exitVehicle(Vehicle vehicle) throws IllegalStateException, IOException {
         if (vehicle == null) throw new NullPointerException();
         Date exitDate = new Date();
 
@@ -174,8 +172,6 @@ public class Parking {
         if (vehiclePlace == null) return null;
 
         Date associatedEntryDate = vehiclePlace.getLastEntranceDate();
-
-        Assert.assertNotNull(associatedEntryDate);
 
         if (associatedEntryDate.after(exitDate)) throw new IllegalStateException();
 

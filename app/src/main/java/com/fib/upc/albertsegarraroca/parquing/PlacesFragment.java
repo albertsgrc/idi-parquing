@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,12 +78,18 @@ public class PlacesFragment extends Fragment {
             public void onClick(View v) {
                 Utils.vibrateClick();
                 String placeId = selectedPlace;
+                if (placeId == null) return;
                 MainActivity activity = (MainActivity) getActivity();
                 ParkingPlace p = Parking.getInstance().getPlace(placeId);
-                if (!p.isActive()) Parking.getInstance().activatePlace(placeId);
+                if (!p.isActive()) {
+                    Parking.getInstance().activatePlace(placeId);
+                    activity.updateOccupation();
+                }
                 else if (p.isOccupied()) activity.exitVehicle(p.getOcuppyingVehicle().getRegistration());
-                else Parking.getInstance().deactivatePlace(placeId);
-                activity.updateOccupation();
+                else {
+                    Parking.getInstance().deactivatePlace(placeId);
+                    activity.updateOccupation();
+                }
                 updatePlace(p);
                 showPlaceInfo(placeId);
             }
@@ -114,7 +119,6 @@ public class PlacesFragment extends Fragment {
             placeView.setBackgroundResource(R.drawable.place_inactive);
             placeView.findViewById(R.id.txtRegistration).setVisibility(View.GONE);
             placeView.findViewById(R.id.iconState).setBackgroundResource(R.drawable.ic_inactive);
-            icon.getLayoutParams().width = icon.getLayoutParams().height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, getResources().getDisplayMetrics());
         }
         else if (place.isOccupied()) {
             placeView.setBackgroundResource(R.drawable.place_occupied);
@@ -122,13 +126,11 @@ public class PlacesFragment extends Fragment {
             tvRegistration.setVisibility(View.VISIBLE);
             tvRegistration.setText(place.getOcuppyingVehicle().getRegistration());
             icon.setBackgroundResource(R.drawable.ic_car);
-            icon.getLayoutParams().width = icon.getLayoutParams().height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 17, getResources().getDisplayMetrics());
         }
         else {
             placeView.setBackgroundResource(R.drawable.place_free);
             placeView.findViewById(R.id.txtRegistration).setVisibility(View.GONE);
             placeView.findViewById(R.id.iconState).setBackgroundResource(R.drawable.ic_okay);
-            icon.getLayoutParams().width = icon.getLayoutParams().height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, getResources().getDisplayMetrics());
         }
 
         if (place.getId().equals(this.selectedPlace)) showPlaceInfo(place.getId());

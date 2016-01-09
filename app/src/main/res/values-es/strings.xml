@@ -60,7 +60,7 @@
     <string name="undo_entry_complete">Entrada revertida correctamente</string>
     <string name="undo_exit_complete">Salida revertida correctamente</string>
     <string name="btnSettings">Ajustes</string>
-    <string name="select_dates">Seleccione el intervalo de tiempo a consultar</string>
+    <string name="select_dates">Seleccione el intervalo de tiempo para ver sus entradas y salidas y la recaptación total</string>
     <string name="select_initial_date_dialog_title">Seleccione la data y hora inicial</string>
     <string name="select_final_date_dialog_title">Seleccione la data y hora final</string>
     <string name="nothing_to_reload">No hay cambios</string>
@@ -100,5 +100,37 @@
     <string name="parking_reseted">Parking reseteado correctamente</string>
     <string name="about_application">Sobre la aplicación</string>
     <string name="about_author">Sobre el autor</string>
-    <string name="about_application_text">Esta aplicación está destinada al uso en parkings públicos de pequeña capacidad, para ayudar al operario del parking a gestionar las entradas y salidas de vehículos, y poder obtener estadísticas sobre la actividad y las recaptaciones que se obtienen.</string>
+    <string name="about_application_text">Esta aplicación está destinada al uso en parkings de pequeña capacidad, para ayudar al operario del parking a gestionar las entradas y salidas de vehículos, y poder obtener estadísticas sobre la actividad y las recaptaciones que se obtienen.</string>
+    <string name="error_time_changed">Parece que has cambiado la hora de tu dispositivo al pasado. Esta aplicación no es compatible con este tipo de cambios. Ajusta la hora de tu dispositivo correctamente o prueba reseteando el parking en la pestaña menú.</string>
+    <string name="database_error">Se ha producido un error al escribir en la base de datos de la aplicación. Por favor, comprueba que tienes espacio libre en el dispositivo o prueba reiniciando la aplicación.</string>
+    <string name="yes">Si</string>
+    <string name="no">No</string>
+    <string name="error">Error</string>
+    <string name="dialog_how_stats_title">Escoge una opción</string>
+    <string name="dialog_how_stats_txt">Quieres agrupar los pares entrada/salida  en la misma fila?</string>
+    <string name="not_finished">No ha salido aún</string>
+    <string name="title_what_can_i_do">¿Qué puedo hacer con esta aplicación?</string>
+    <string name="title_add_activity">¿Cómo puedo registrar la entrada/salida de un vehículo?</string>
+    <string name="title_undo_activity">¿Cómo puedo deshacer la última entrada/salida de un vehículo?</string>
+    <string name="title_see_place">¿Cómo puedo ver el estado y la información de una plaza?</string>
+    <string name="title_block_place">¿Qué pasa si bloqueo una plaza?</string>
+    <string name="title_what_means_id">¿Qué significan los tags como A1 o D3?</string>
+    <string name="title_where_are_files_saved">¿Dónde se guardan los ficheros de datos y resumen mensual bajados?</string>
+    <string name="title_see_more_info">¿Cómo puedo ver más información sobre los elementos de la lista de entradas y salidas?</string>
+    <string name="title_why_registration_uppercase">¿Porqué se muestran las matrículas en mayúscula?</string>
+    <string name="title_how_open_files">¿Cómo puedo abrir los ficheros de datos y resumen mensual bajados?</string>
+    <string name="title_colors">¿Qué significa cada color?</string>
+    <string name="title_see_activities">¿Cómo puedo ver las entradas y salidas del parking y la recaptación?</string>
+    <string name="text_add_activity">Puedes registrar entradas y salidas mediante la barra situada en la parte inferior de la pantalla. El bot\u00f3n situado en la parte izquierda sirve para registrar nuevas entradas, mientras que el de la derecha sirve para registrar nuevas salidas. Para registrar una nueva entrada deber\u00e1s escribir la matr\u00edcula del veh\u00edculo entrante, pero no es necesario escribirla en may\u00fasculas, la aplicaci\u00f3n lo har\u00e1 para ti!</string>
+    <string name="text_what_can_i_do">Con esta aplicaci\u00f3n puedes registrar la entrada y salida de veh\u00edculos del parking, ver la ocupaci\u00f3n del mismo, consultar el estado y la informaci\u00f3n sobre sus plazas, consultar un historial de entradas y salidas\nen un intervalo de tiempo determinado, ver el dinero recaptado y las entradas y salidas realizadas durante un intervalo de tiempo determinado, deshacer la \u00faltima entrada/salida realizada, bajar datos del p\u00e1rquing para hacer estudios con excel y bajar un resumen mensual de la recaptaci\u00f3n para ver en un navegador web.</string>
+    <string name="text_undo_activity">Puedes deshacer una entrada/salida de un veh\u00edculo de tres formas distintas. En el caso de una entrada, justo cuando acabas de realizarla aparece una barra justo encima de la barra inferior que te permite revertirla. En el caso de una salida, cuando se muestra el tiquet el bot\u00f3n de la derecha te permite deshacerla. Tambi\u00e9n puedes hacerlo en cualquier momento con el 2o bot\u00f3n de la pesta\u00f1a men\u00fa: No te preocupes, se te mostrar\u00e1 un aviso con la actividad a deshacer.\n</string>
+    <string name="text_see_place">Puedes consultar el estado y la informaci\u00f3n sobre una plaza en la pesta\u00f1a \'plazas\'. \u00danicamente hace falta que la selecciones en la tabla de botones que se muestra, y ver\u00e1s que la informaci\u00f3n aparece justo encima de la tabla. Adem\u00e1s, los colores de los botones y los iconos de los botones indican el estado de la plaza. El rojo indica que la plaza est\u00e1 ocupada, el verde indica que est\u00e1 libre y el gris indica que est\u00e1 bloqueada. En el caso de las plazas ocupadas, el texto que aparece debajo del icono es la matr\u00edcula del veh\u00edculo que ocupa la plaza. \n</string>
+    <string name="text_see_activities">Puedes ver las entradas y salidas efectuadas y la recaptaci\u00f3n acumulada en la pesta\u00f1a \'recaptaci\u00f3n\'. S\u00f3lo hace falta que indiques un momento inicial y un momento final pulsando los botones de la barra superior, o que pulses el checkbox para ver las del dia de hoy desde las 00:00 hasta el momento. Aparecer\u00e1 la recaptaci\u00f3n acumulada y la lista de entradas y salidas realizadas en el intervalo de tiempo indicado justo debajo.</string>
+    <string formatted="false" name="text_colors">Los colores de la barra inferior indican el nivel de ocupaci\u00f3n del parking. Cuando est\u00e1 verde significa que la ocupaci\u00f3n del parking est\u00e1 por debajo del 25%, cuando est\u00e1 azul por debajo del 50%, cuando est\u00e1 naranja por debajo del 75% y cuando est\u00e1 roja por debajo del 100% incluido.</string>
+    <string name="text_block_place">Bloquear una plaza significa impedir que cualquier veh\u00edculo la pueda ocupar. Significa por lo tanto reducir la capacidad del parking en una plaza.</string>
+    <string name="text_how_open_files">Para abrir el fichero de datos de formato csv puedes utilizar Excel o OpenOffice. Para abrir el fichero de formato html con el resumen mensual puedes utilizar cualquier navegador web.</string>
+    <string name="text_what_means_id">A1 o D3 son identificadores de plazas. La letra indica su fila en la tabla y el n\u00famero indica su columna.</string>
+    <string name="text_see_more_info">Para ver m\u00e1s informaci\u00f3n sobre un elemento de la lista de entradas/salidas puedes pulsar encima del elemento.</string>
+    <string name="text_where_are_files_saved">Los ficheros se guardan en la carpeta de Bajadas de tu dispositivo. Prueba de iniciar la aplicación de Bajadas para encontrar el fichero bajado.</string>
+    <string name="text_why_registration_uppercase">Las matrículas se convierten a mayusculas porque todos los formatos de matrícula siguen esta convención. </string>
 </resources>

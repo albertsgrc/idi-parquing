@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,8 +35,6 @@ import com.fib.upc.albertsegarraroca.parquing.Model.VehicleEntry;
 import com.fib.upc.albertsegarraroca.parquing.Model.VehicleExit;
 
 public class MenuFragment extends Fragment {
-    private static final int SAVE_STATS_RESULT_CODE = 0;
-
     public MenuFragment() {
     }
 
@@ -114,8 +111,6 @@ public class MenuFragment extends Fragment {
 
         final View dialogView = getActivity().getLayoutInflater().inflate(R.layout.dialog_reset_confirmation, null);
 
-        Log.d("Message", getString(R.string.warning_reset));
-
         ((TextView) dialogView.findViewById(R.id.dialogText)).setText(Html.fromHtml(getString(R.string.warning_reset).replace("_X_", "<b>").replace("_Y_", "</b>")));
         ((TextView) dialogView.findViewById(R.id.confirmationCode)).setText("" + v);
 
@@ -138,8 +133,8 @@ public class MenuFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         String text = edit.getText().toString();
-                        if (text.length() > 0) {
-                            int code = Integer.valueOf(edit.getText().toString());
+                        if (text.trim().length() > 0) {
+                            int code = Integer.valueOf(edit.getText().toString().trim());
                             if (code == v) {
                                 ((MainActivity) getActivity()).resetParking();
                                 d.dismiss();
@@ -197,11 +192,29 @@ public class MenuFragment extends Fragment {
     }
 
     private void handleStats() {
-        final String content = new VehicleActivityList(db, true).toCsv(getString(R.string.header_csv));
-        final String filename = getString(R.string.stats) + "-" + Utils.fileTimeStamp() + ".csv";
+        new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.dialog_how_stats_title)
+                .setMessage(R.string.dialog_how_stats_txt)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        final String content = new VehicleActivityList(db, true).toCsvGrouped(getString(R.string.header_csv_grouped), getString(R.string.not_finished));
+                        final String filename = getString(R.string.stats) + "-" + getString(R.string.grouped) + "-" + Utils.fileTimeStamp() + ".csv";
 
-        if (saveDownloads(filename, content, "csv"))
-            Utils.showToast(getString(R.string.stats_created), Toast.LENGTH_LONG);
+                        if (saveDownloads(filename, content, "csv"))
+                            Utils.showToast(getString(R.string.stats_created), Toast.LENGTH_LONG);
+                    }
+                })
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        final String content = new VehicleActivityList(db, true).toCsv(getString(R.string.header_csv));
+                        final String filename = getString(R.string.stats) + "-" + Utils.fileTimeStamp() + ".csv";
+
+                        if (saveDownloads(filename, content, "csv"))
+                            Utils.showToast(getString(R.string.stats_created), Toast.LENGTH_LONG);
+                    }
+                }).create().show();
     }
 
     private void handleSummary() {

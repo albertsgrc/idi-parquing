@@ -15,8 +15,7 @@ import com.fib.upc.albertsegarraroca.parquing.Model.VehicleActivity;
 import com.fib.upc.albertsegarraroca.parquing.Model.VehicleEntry;
 import com.fib.upc.albertsegarraroca.parquing.Model.VehicleExit;
 
-import junit.framework.Assert;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -84,9 +83,9 @@ public class Database extends SQLiteOpenHelper {
         return this.getWritableDatabase().delete(table, whereClause, null);
     }
 
-    private void endBad() {
+    private void endBad() throws IOException {
         this.getWritableDatabase().endTransaction();
-        Assert.assertTrue(false);
+        throw new IOException();
     }
 
     private void endGood() {
@@ -98,7 +97,7 @@ public class Database extends SQLiteOpenHelper {
         this.getWritableDatabase().beginTransaction();
     }
 
-    public void occupyPlace(String placeId, String occupyingVehicleRegistration, String date) {
+    public void occupyPlace(String placeId, String occupyingVehicleRegistration, String date) throws IOException {
         ContentValues valuesPlace = new ContentValues();
         valuesPlace.put("vehicle", occupyingVehicleRegistration);
         valuesPlace.put("lastEntranceDate", date);
@@ -116,7 +115,7 @@ public class Database extends SQLiteOpenHelper {
         else endGood();
     }
 
-    public VehicleExit freePlace(String placeId, String date, double income, String associatedEntryDate) {
+    public VehicleExit freePlace(String placeId, String date, double income, String associatedEntryDate) throws IOException {
         ContentValues valuesPlace = new ContentValues();
         valuesPlace.put("vehicle", (String) null);
         valuesPlace.put("lastEntranceDate", (String) null);
@@ -145,16 +144,16 @@ public class Database extends SQLiteOpenHelper {
     public void deactivatePlace(String placeId) {
         ContentValues values = new ContentValues();
         values.put("isActive", false);
-        Assert.assertEquals(update(PARKING_PLACES_TABLE, values, "id = '" + placeId + "'"), 1);
+        update(PARKING_PLACES_TABLE, values, "id = '" + placeId + "'");
     }
 
     public void activatePlace(String placeId) {
         ContentValues values = new ContentValues();
         values.put("isActive", true);
-        Assert.assertEquals(update(PARKING_PLACES_TABLE, values, "id = '" + placeId + "'"), 1);
+        update(PARKING_PLACES_TABLE, values, "id = '" + placeId + "'");
     }
 
-    public void resetParking(ArrayList<String> ids) {
+    public void resetParking(ArrayList<String> ids) throws IOException {
         delete(PARKING_PLACES_TABLE, null);
         delete(VEHICLE_ACTIVITIES_TABLE, null);
 
@@ -226,7 +225,6 @@ public class Database extends SQLiteOpenHelper {
 
         } else { // is exit
             String entryDateString = c.getString(c.getColumnIndex("odate"));
-            Assert.assertNotNull(entryDateString);
             Date entryDate = Utils.dbStringToDate(entryDateString);
             String vehicleIString = c.getString(c.getColumnIndex("ovehicle"));
             Vehicle vehicleI = new Vehicle(vehicleIString);
@@ -238,7 +236,7 @@ public class Database extends SQLiteOpenHelper {
         return va;
     }
 
-        public VehicleActivity undoLastActivity(boolean force) throws IllegalStateException {
+        public VehicleActivity undoLastActivity(boolean force) throws IllegalStateException, IOException {
         Cursor cLast = read("SELECT MAX(date) AS lastDate FROM " + VEHICLE_ACTIVITIES_TABLE);
 
         if (!cLast.moveToFirst()) return null;
@@ -271,7 +269,6 @@ public class Database extends SQLiteOpenHelper {
         }
         else { // is exit
             String entryDateString = c.getString(c.getColumnIndex("odate"));
-            Assert.assertNotNull(entryDateString);
             Date entryDate = Utils.dbStringToDate(entryDateString);
             String vehicleIString = c.getString(c.getColumnIndex("ovehicle"));
             Vehicle vehicleI = new Vehicle(vehicleIString);
@@ -280,9 +277,6 @@ public class Database extends SQLiteOpenHelper {
             va = new VehicleExit(Utils.dbStringToDate(lastActivityDate), associatedEntry);
 
             ParkingPlace place = getPlace(placeId);
-
-            Assert.assertNotNull(place);
-
 
             // Place is not active, cannot occupy
             if (!place.isActive()) {

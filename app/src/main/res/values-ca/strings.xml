@@ -60,7 +60,7 @@
     <string name="undo_entry_complete">S\'ha desfet l\'entrada correctament</string>
     <string name="undo_exit_complete">S\'ha desfet la sortida correctament</string>
     <string name="btnSettings">Preferències</string>
-    <string name="select_dates">Seleccioni l\'interval de temps a consultar</string>
+    <string name="select_dates">Seleccioni l\'interval de temps per veure les seves entrades/sortides i la recaptació total</string>
     <string name="select_initial_date_dialog_title">Seleccioni la data i hora inicial</string>
     <string name="select_final_date_dialog_title">Seleccioni la data i hora finals</string>
     <string name="nothing_to_reload">No hi ha canvis</string>
@@ -100,5 +100,37 @@
     <string name="parking_reseted">Pàrquing reiniciat correctament</string>
     <string name="about_application">Sobre l\'aplicació</string>
     <string name="about_author">Sobre l\'autor</string>
-    <string name="about_application_text">Aquesta aplicació està destinada a l\'ús en pàrquings públics de capacitat petita, per ajudar a l\'operari del pàrquing a gestionar les entrades i sortides de vehicles, i poder obtenir estadístiques sobre l\'activitat i les recaptacions que s\'obtenen.</string>
+    <string name="about_application_text">Aquesta aplicació està destinada a l\'ús en pàrquings de capacitat petita, per ajudar a l\'operari del pàrquing a gestionar les entrades i sortides de vehicles, i poder obtenir estadístiques sobre l\'activitat i les recaptacions que s\'obtenen.</string>
+    <string name="error_time_changed">Sembla que has canviat l\'hora del teu dispositiu al passat. Aquesta aplicació no és compatible amb aquest tipus de canvis. Siusplau, ajusta l\'hora correctament o prova reiniciant el pàrquing a la pestanya menú.</string>
+    <string name="database_error">S\'ha produit un error en escriure a la base de dades de l\'aplicació. Siusplau, comprova que tens espai lliure al dispositiu o prova de reiniciar l\'aplicació.</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    <string name="error">Error</string>
+    <string name="dialog_how_stats_title">Tria una opció</string>
+    <string name="dialog_how_stats_txt">Vols agrupar els parells entrada/sortida a la mateixa fila?</string>
+    <string name="not_finished">No ha sortit encara</string>
+    <string name="title_what_can_i_do">Què puc fer amb aquesta aplicació?</string>
+    <string name="title_add_activity">Com puc registrar una entrada/sortida d\'un vehicle?</string>
+    <string name="title_undo_activity">Com puc desfer l\'última entrada/sortida d\'un vehicle?</string>
+    <string name="title_see_place">Com puc veure l\'estat i la informació d\'una plaça?</string>
+    <string name="title_block_place">Què passa si bloquejo una plaça?</string>
+    <string name="title_what_means_id">Què volen dir els tags com A1 o D3?</string>
+    <string name="title_where_are_files_saved">A on es guarden els fitxers de dades i resum mensual baixats?</string>
+    <string name="title_see_more_info">Com puc veure més informació sobre els elements de la llista d\'entrades i sortides?</string>
+    <string name="title_why_registration_uppercase">Perquè es mostren les matrícules en majúscula?</string>
+    <string name="title_how_open_files">Com puc obrir els fitxers de dades i resum mensual baixats?</string>
+    <string name="title_colors">Què vol dir cada color?</string>
+    <string name="title_see_activities">Com puc veure les entrades i sortides del pàrquing i la recaptació?</string>
+    <string name="text_add_activity">Pots registrar entrades i sortides mitjan\u00e7ant la barra situada a la part inferior de la pantalla. El bot\u00f3 situat a l\'esquerra serveix per registrar noves entrades i el de la dreta serveix per registrar sortides. Per registrar una entrada haur\u00e0s de escriure la matr\u00edcula del vehicle entrant, per\u00f2 no cal que l\'escriguis en maj\u00fascula, l\'aplicaci\u00f3 ho far\u00e0 per tu!</string>
+    <string name="text_what_can_i_do">Amb aquesta aplicaci\u00f3 pots registrar l\'entrada i sortida de vehicles del p\u00e0rquing, veure l\'ocupaci\u00f3 del p\u00e0rquing, veure l\'estat i l\'informaci\u00f3 sobre les seves places, consultar un historial d\'entrades i sortides en un interval de temps determinat, veure els diners recaptats i les entrades i sortides realitzades durant un interval de temps determinat, desfer l\'\u00faltima entrada/sortida realitzada, baixar dades del p\u00e0rquing per fer estudis amb excel, i baixar un resum mensual de la recaptaci\u00f3 per veure en un navegador web.</string>
+    <string name="text_undo_activity">Pots desfer una entrada/sortida d\'un vehicle de tres maneres diferents. En el cas d\'una entrada, just quan l\'acabes de realitzar apareix una barra a sobre la barra inferior que et permet desfer-la. En el cas d\'una sortida, en mostrar el tiquet el bot\u00f3 de la dreta et permet desfer-la. Tamb\u00e9 pots fer-ho en qualsevol moment amb el 2n bot\u00f3 de la pestanya men\u00fa: No pateixis, se\'t mostrar\u00e0 un av\u00eds amb l\'activitat que es desfar\u00e0.\n</string>
+    <string name="text_see_place">Pots veure l\'estat i la informaci\u00f3 d\'una pla\u00e7a en la pestanya \'places\'. Nom\u00e9s cal que seleccionis la pla\u00e7a en\nla taula de botons quadrats que s\'hi mostra, i veur\u00e0s com just a sobre de la taula n\'apareix tota la informaci\u00f3. A m\u00e9s, els colors i les icones dels botons indiquen l\'estat de la pla\u00e7a. El vermell indica que la pla\u00e7a est\u00e0 ocupada, el verd indica que est\u00e0 lliure i el gris indica que es est\u00e0 bloquejada. En el cas de les places ocupades, el text que apareix a sota de l\'icona \u00e9s la matr\u00edcula del vehicle que ocupa la pla\u00e7a.</string>
+    <string name="text_see_activities">Pots veure les entrades i sortides efectuades i la recaptaci\u00f3 acumulada a la pestanya \'recaptaci\u00f3\'. Nom\u00e9s cal que indiquis un moment inicial i un moment final prement els botons de la barra superior, o que premis el checkbox per veure les del dia d\'avui desde les 00:00 fins el moment. Apareixer\u00e0 la recaptaci\u00f3 acumulada i la llista d\'entrades i sortides en l\'interval de temps indicat just a sota. Si vols actualitzar la llista nom\u00e9s cal que premis al bot\u00f3 blau clar.</string>
+    <string name="text_block_place">Bloquejar una pla\u00e7a significa impedir que qualsevol vehicle la pugui ocupar. Significa per tant reduir la capacitat del p\u00e0rquing en una unitat.</string>
+    <string name="text_how_open_files">Per obrir el fitxer de les dades de format csv pots utilitzar l\'Excel o l\'OpenOffice. Per obrir el fitxer de format html amb el resum mensual pots utilitzar qualsevol navegador web.</string>
+    <string name="text_what_means_id">A1 o D3 s\u00f3n identificadors de places. La lletra indica la seva fila en la taula i el nombre n\'indica la seva columna.</string>
+    <string name="text_see_more_info">Per veure m\u00e9s informaci\u00f3 sobre un element de la llista d\'entrades/sortides pots clicar a sobre de l\'element.</string>
+    <string name="text_where_are_files_saved">Els fitxers es guarden a la carpeta de Baixades del teu dispositiu. Prova d\'iniciar l\'aplicació de Baixades per trobar el fitxer baixat. </string>
+    <string name="text_why_registration_uppercase">Les matr\u00edcules es converteixen a maj\u00fascules perqu\u00e8 tots els formats de matr\u00edcula segueixen aquesta convenci\u00f3.</string>
+    <string formatted="false" name="text_colors">Els colors de la barra inferior indiquen el nivell d\'ocupació del pàrquing. Quan està verda significa que la ocupació del pàrquing està per sota del 25%, quan està blava per sota del 50%, quan està taronja per sota del 75% i quan esta vermella per sota del 100% inclòs.</string>
 </resources>

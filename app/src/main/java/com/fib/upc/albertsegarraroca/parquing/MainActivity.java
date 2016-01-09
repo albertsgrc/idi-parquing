@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentActivity;
@@ -26,7 +28,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fib.upc.albertsegarraroca.parquing.Data.Database;
-import com.fib.upc.albertsegarraroca.parquing.Data.Files;
 import com.fib.upc.albertsegarraroca.parquing.Model.Parking;
 import com.fib.upc.albertsegarraroca.parquing.Model.ParkingPlace;
 import com.fib.upc.albertsegarraroca.parquing.Model.Utils;
@@ -93,17 +94,23 @@ public class MainActivity extends FragmentActivity {
 
         db = new Database(getApplicationContext());
         Parking parking = Parking.getInstance();
-        parking.init(db);
-        Utils.setContext(getApplicationContext());
 
         try {
-            Files.getInstance().init();
-        } catch (IOException e) {
-            Utils.showAlertDialog(getString(R.string.error_create_folders));
+            parking.init(db);
+        } catch(IOException e) {
+            handleDatabaseError();
         }
+
+        Utils.setContext(getApplicationContext());
 
         setBottomBarListeners();
         updateOccupation();
+    }
+
+    private void handleDatabaseError() {
+        new AlertDialog.Builder(this).setTitle(R.string.error)
+                .setMessage(R.string.database_error)
+                .setPositiveButton(R.string.okay, null).create().show();
     }
 
     public void updateOccupation() {
@@ -165,17 +172,33 @@ public class MainActivity extends FragmentActivity {
                     .setPositiveButton(R.string.unblock, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            VehicleActivity va = Parking.getInstance().undoLastActivityForced();
+                            VehicleActivity va;
+                            try {
+                                va = Parking.getInstance().undoLastActivityForced();
+                            } catch (IOException e) {
+                                handleDatabaseError();
+                                return;
+                            }
                             undoComplete(va);
                         }
                     }).create().show();
+        } catch (IOException e) {
+            handleDatabaseError();;
+            return;
         }
 
         findViewById(R.id.undoBar).setVisibility(View.GONE);
     }
 
     public void resetParking() {
-        Parking.getInstance().reset();
+        try {
+            Parking.getInstance().reset();
+        }
+        catch (IOException e) {
+            handleDatabaseError();
+            return;
+        }
+
         updateOccupation();
         for (ParkingPlace p : Parking.getInstance().getPlaces()) placesFragment.updatePlace(p);
         findViewById(R.id.undoBar).setVisibility(View.GONE);
@@ -254,9 +277,13 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void addNewVehicleEntry(Vehicle vehicle) {
-        ParkingPlace place = Parking.getInstance().enterVehicle(vehicle);
-
-        // TODO: Show undo
+        ParkingPlace place;
+        try {
+            place = Parking.getInstance().enterVehicle(vehicle);
+        } catch (IOException e) {
+            handleDatabaseError();
+            return;
+        }
 
         if (placesFragment != null) {
             placesFragment.updatePlace(place);
@@ -312,8 +339,18 @@ public class MainActivity extends FragmentActivity {
 
     public void exitVehicle(String vehicle) {
         findViewById(R.id.undoBar).setVisibility(View.GONE);
-
-        VehicleExit exit = Parking.getInstance().exitVehicle(new Vehicle(vehicle));
+        VehicleExit exit;
+        try {
+           exit = Parking.getInstance().exitVehicle(new Vehicle(vehicle));
+        } catch(IllegalStateException e) {
+            new AlertDialog.Builder(this).setTitle(R.string.error)
+                    .setMessage(R.string.error_time_changed)
+                    .setPositiveButton(R.string.okay, null).create().show();
+            return;
+        } catch(IOException e) {
+            handleDatabaseError();
+            return;
+        }
 
         View view = getLayoutInflater().inflate(R.layout.dialog_ticket, null);
 
@@ -329,7 +366,7 @@ public class MainActivity extends FragmentActivity {
         ((TextView) view.findViewById(R.id.ticketTimeExitInfo).findViewById(R.id.info)).setText(Utils.formatDateLong(exit.getDate()));
         ((TextView) view.findViewById(R.id.ticketIncomeInfo).findViewById(R.id.info)).setText(Utils.toEurosValueString(exit.getIncome()) + " €");
 
-        new AlertDialog.Builder(this)
+        final AlertDialog d = new AlertDialog.Builder(this)
                 .setTitle(R.string.ticket)
                 .setView(view)
                 .setPositiveButton(R.string.okay, null)
@@ -338,7 +375,25 @@ public class MainActivity extends FragmentActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         undoLastActivity(null);
                     }
-                }).create().show();
+                }).create();
+
+        d.setOnShowListener(new DialogInterface.OnShowListener() {
+
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                Button button = d.getButton(AlertDialog.BUTTON_NEGATIVE);
+
+                Drawable drawable = getResources().getDrawable(R.drawable.ic_undo_variant);
+
+                // set the bounds to place the drawable a bit right
+                drawable.setBounds((int) (drawable.getIntrinsicWidth() * 0.5),
+                        0, (int) (drawable.getIntrinsicWidth() * 1.5),
+                        drawable.getIntrinsicHeight());
+                button.setCompoundDrawables(drawable, null, null, null);
+            }
+        });
+
+        d.show();
 
         if (placesFragment != null)
             placesFragment.updatePlace(exit.getPlace());
@@ -362,9 +417,55 @@ public class MainActivity extends FragmentActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch(id) {
+            case R.id.action_help:
+                Intent intent = new Intent(this, HelpActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.action_about:
+                Intent intent2 = new Intent(this, AboutActivity.class);
+                startActivity(intent2);
+                break;
+            case R.id.action_undo:
+                View dv = getLayoutInflater().inflate(R.layout.dialog_info_item, null);
+
+                VehicleActivity ac = Parking.getInstance().getLastActivity();
+
+                if (ac == null) {
+                    Utils.showToast(getString(R.string.error_no_last_activity), Toast.LENGTH_LONG);
+                    break;
+                }
+
+                boolean isEntry = ac.getClass() == VehicleEntry.class;
+
+                ((TextView) dv.findViewById(R.id.itemTypeInfo).findViewById(R.id.title)).setText(R.string.type);
+                ((TextView) dv.findViewById(R.id.itemPlaceInfo).findViewById(R.id.title)).setText(R.string.parking_place_short);
+                ((TextView) dv.findViewById(R.id.itemRegistrationInfo).findViewById(R.id.title)).setText(R.string.registration_long);
+                ((TextView) dv.findViewById(R.id.itemDateInfo).findViewById(R.id.title)).setText(R.string.date);
+
+                if (isEntry) dv.findViewById(R.id.itemIncomeInfo).setVisibility(View.GONE);
+                else ((TextView) dv.findViewById(R.id.itemIncomeInfo).findViewById(R.id.title)).setText(R.string.price);
+
+                ((TextView) dv.findViewById(R.id.itemTypeInfo).findViewById(R.id.info)).setText(isEntry ? R.string.entry_short : R.string.exit_short);
+                ((TextView) dv.findViewById(R.id.itemPlaceInfo).findViewById(R.id.info)).setText(ac.getPlace());
+                ((TextView) dv.findViewById(R.id.itemRegistrationInfo).findViewById(R.id.info)).setText(ac.getVehicle().getRegistration());
+                ((TextView) dv.findViewById(R.id.itemDateInfo).findViewById(R.id.info)).setText(Utils.formatDateLong(ac.getDate()));
+
+                if (!isEntry)
+                    ((TextView) dv.findViewById(R.id.itemIncomeInfo).findViewById(R.id.info)).setText(Utils.toEurosValueString(ac.getIncome()) + " €");
+
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.warning_undo)
+                        .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                undoLastActivity(null);
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, null)
+                        .setView(dv)
+                        .create().show();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -377,7 +478,7 @@ public class MainActivity extends FragmentActivity {
         int icon;
 
         switch(pos) {
-            case 0: title = R.string.places; icon = R.drawable.ic_car; break;
+            case 0: title = R.string.places; icon = R.drawable.ic_car_big; break;
             case 1: title = R.string.revenue; icon = R.drawable.ic_coins; break;
             default: title = R.string.menu; icon = R.drawable.ic_menu;
         }

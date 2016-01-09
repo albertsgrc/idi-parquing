@@ -106,7 +106,7 @@
                 android:id="@+id/textView8"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/white"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 android:layout_gravity="center_horizontal" />
         </LinearLayout>
 

@@ -40,7 +40,7 @@
             android:id="@+id/undoText"
             android:textColor="#ffffffff"
             android:layout_centerVertical="true"
-            android:textSize="13sp"
+            android:textSize="12sp"
             android:text="ycyci" />
 
         <FrameLayout

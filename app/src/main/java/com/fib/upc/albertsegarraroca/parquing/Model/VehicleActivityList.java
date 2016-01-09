@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 
 import com.fib.upc.albertsegarraroca.parquing.Data.Database;
+import com.fib.upc.albertsegarraroca.parquing.R;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -91,7 +92,7 @@ public class VehicleActivityList {
      * @param header Place;DateEntry;DateExit;Registration;Income
      * @return
      */
-    public String toCsvGrouped(String header) {
+    public String toCsvGrouped(String header, String not_finished) {
         StringBuilder builder = new StringBuilder();
 
         DecimalFormat df = new DecimalFormat("#.##", DecimalFormatSymbols.getInstance());
@@ -107,9 +108,9 @@ public class VehicleActivityList {
 
             builder.append(ve.getPlace()).append(CSV_SEPARATOR)
                    .append(Utils.formatDateLong(ve.getDate())).append(CSV_SEPARATOR)
-                   .append(ve.hasFinished() ? Utils.formatDateLong(ve.getExitDate()) : "").append(CSV_SEPARATOR)
+                   .append(ve.hasFinished() ? Utils.formatDateLong(ve.getExitDate()) : not_finished).append(CSV_SEPARATOR)
                    .append(va.getVehicle().getRegistration()).append(CSV_SEPARATOR)
-                   .append(df.format(ve.getIncome()))
+                   .append(df.format(ve.hasFinished() ? ve.getAssociatedExit().getIncome() : 0.0))
                    .append("\n");
         }
 

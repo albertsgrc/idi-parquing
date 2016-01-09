@@ -23,6 +23,7 @@
     <item name="bad_focused" type="color">#ffba3b2f</item>
     <item name="inactive_focused" type="color">#ff575d5e</item>
 
+    <item name="button_pressed_transparent" type="color">#40ffffff</item>
     <item name="button_pressed" type="color">#21fffdf3</item>
     <item name="button_focused" type="color">#b47b16</item>
     <item name="button_normal" type="color">#1a000000</item>

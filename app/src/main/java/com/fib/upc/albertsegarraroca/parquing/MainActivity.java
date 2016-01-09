@@ -27,7 +27,6 @@ import android.widget.Toast;
 
 import com.fib.upc.albertsegarraroca.parquing.Data.Database;
 import com.fib.upc.albertsegarraroca.parquing.Data.Files;
-import com.fib.upc.albertsegarraroca.parquing.Data.Preferences;
 import com.fib.upc.albertsegarraroca.parquing.Model.Parking;
 import com.fib.upc.albertsegarraroca.parquing.Model.ParkingPlace;
 import com.fib.upc.albertsegarraroca.parquing.Model.Utils;
@@ -91,8 +90,6 @@ public class MainActivity extends FragmentActivity {
         addTab(0, tabListener);
         addTab(1, tabListener);
         addTab(2, tabListener);
-
-        Preferences.getInstance().init(getApplicationContext());
 
         db = new Database(getApplicationContext());
         Parking parking = Parking.getInstance();
@@ -165,7 +162,7 @@ public class MainActivity extends FragmentActivity {
             new AlertDialog.Builder(this).setTitle(R.string.error)
                     .setMessage(R.string.error_cannot_undo)
                     .setNegativeButton(R.string.cancel, null)
-                    .setPositiveButton(R.string.activate, new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.unblock, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             VehicleActivity va = Parking.getInstance().undoLastActivityForced();
@@ -177,7 +174,14 @@ public class MainActivity extends FragmentActivity {
         findViewById(R.id.undoBar).setVisibility(View.GONE);
     }
 
-    private void undoComplete(VehicleActivity va) {
+    public void resetParking() {
+        Parking.getInstance().reset();
+        updateOccupation();
+        for (ParkingPlace p : Parking.getInstance().getPlaces()) placesFragment.updatePlace(p);
+        findViewById(R.id.undoBar).setVisibility(View.GONE);
+    }
+
+    public void undoComplete(VehicleActivity va) {
         boolean entry = va.getClass() == VehicleEntry.class;
         updateOccupation();
         if (placesFragment != null) placesFragment.updatePlace(va.getPlace());
@@ -229,17 +233,14 @@ public class MainActivity extends FragmentActivity {
                 b.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        TextView tv = (TextView) dialog.findViewById(R.id.editRegistration);
+                        EditText tv = (EditText) dialog.findViewById(R.id.editRegistration);
                         final String text = tv.getText().toString();
 
-                        if (text.isEmpty()) Utils.showToast(getString(R.string.error_empty_registration), Toast.LENGTH_LONG);
+                        if (text.isEmpty()) tv.setError(getString(R.string.error_empty_registration));
                         else {
                             Vehicle vehicle = new Vehicle(text);
 
-                            if (Preferences.getInstance().registrationValidation() && !vehicle.seemsValidRegistration()) {
-                                Utils.showToast(getString(R.string.error_invalid_registration), Toast.LENGTH_LONG);
-                            }
-                            else if (Parking.getInstance().isInside(vehicle)) Utils.showToast(getString(R.string.error_vehicle_inside), Toast.LENGTH_LONG);
+                            if (Parking.getInstance().isInside(vehicle)) Utils.showToast(getString(R.string.error_vehicle_inside), Toast.LENGTH_LONG);
                             else {
                                 dialog.dismiss();
                                 addNewVehicleEntry(vehicle);

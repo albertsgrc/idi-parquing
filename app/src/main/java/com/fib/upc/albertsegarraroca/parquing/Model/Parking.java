@@ -1,11 +1,6 @@
 package com.fib.upc.albertsegarraroca.parquing.Model;
 
-import android.content.Context;
-import android.database.Cursor;
-import android.util.Log;
-
 import com.fib.upc.albertsegarraroca.parquing.Data.Database;
-import com.fib.upc.albertsegarraroca.parquing.Data.Preferences;
 
 import junit.framework.Assert;
 
@@ -75,6 +70,8 @@ public class Parking {
 
         return va;
     }
+
+    public VehicleActivity getLastActivity() { return db.getLastActivity(); }
 
     public VehicleActivity undoLastActivity() throws IllegalStateException {
         return undoLastActivity(false);

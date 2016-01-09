@@ -7,6 +7,7 @@ import com.fib.upc.albertsegarraroca.parquing.Model.Utils;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -46,23 +47,40 @@ public class Files {
         createFolder(EMAIL_FILE_DIR);
     }
 
-    public void saveFile(String folderPath, String filename, String content) throws IOException {
+    public File saveFile(String folderPath, String filename, String content) throws IOException {
         File folder = new File(folderPath);
 
         if (!folder.isDirectory()) createFolder(folderPath);
 
         File dest = new File(folder, filename);
 
-        Writer writer = new BufferedWriter(new FileWriter(dest));
+        Writer writer = new BufferedWriter((new OutputStreamWriter(new FileOutputStream(dest),"UTF-8")));
         writer.write(content);
         writer.close();
+
+        return dest;
     }
 
-    public void saveDocument(String filename, String content) throws IOException {
-        saveFile(GLOBAL_DIR, filename, content);
+    public File saveFile(String path, String content) throws IOException {
+        File file = new File(path);
+
+        if (!file.isFile()) {
+            boolean created = file.createNewFile();
+            if (!created) throw new IOException();
+        }
+
+        Writer writer = new BufferedWriter(new FileWriter(file));
+        writer.write(content);
+        writer.close();
+
+        return file;
     }
 
-    public void saveEmailAttachment(String filename, String content) throws IOException {
-        saveFile(EMAIL_FILE_DIR, filename, content);
+    public File saveDocument(String filename, String content) throws IOException {
+        return saveFile(GLOBAL_DIR, filename, content);
+    }
+
+    public File saveEmailAttachment(String filename, String content) throws IOException {
+        return saveFile(EMAIL_FILE_DIR, filename, content);
     }
 }

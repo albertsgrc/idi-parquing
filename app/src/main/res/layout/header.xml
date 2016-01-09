@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
+    android:orientation="horizontal"
     android:layout_height="60dp"
-    android:background="@color/bad"
+    android:background="@color/background"
     android:paddingTop="0dp"
     android:paddingBottom="0dp"
     android:id="@+id/globalContainer">
@@ -26,18 +27,16 @@
         android:paddingBottom="5dp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:layout_alignParentStart="true" />
+        android:layout_weight="0" />
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center_vertical"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="false"
-        android:layout_marginEnd="33dp"
-        android:id="@+id/linearLayout2"
-        android:layout_centerHorizontal="true">
+        android:id="@+id/occupationIndicator"
+        android:layout_weight="1"
+        android:focusable="false">
 
         <TextView
             android:layout_width="wrap_content"
@@ -45,14 +44,13 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/occupation"
             android:id="@+id/txtOccupation"
-            android:textSize="13dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
+            android:textSize="13sp"
             android:textAlignment="gravity"
             android:gravity="center_horizontal"
             android:textColor="#fffffcff"
             android:textAllCaps="true"
-            android:ellipsize="middle" />
+            android:ellipsize="middle"
+            android:layout_gravity="center_horizontal" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -60,7 +58,7 @@
             android:text="10/10"
             android:id="@+id/txtOccupationInfo"
             android:layout_gravity="center_horizontal"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="#fff7fcff" />
     </LinearLayout>
@@ -82,10 +80,8 @@
         android:text="@string/exit"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
         android:paddingLeft="5dp"
-        android:paddingRight="5dp" />
+        android:paddingRight="5dp"
+        android:layout_weight="0" />
 
-</RelativeLayout>
+</LinearLayout>

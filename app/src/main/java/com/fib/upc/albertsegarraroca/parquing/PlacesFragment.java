@@ -143,18 +143,19 @@ public class PlacesFragment extends Fragment {
     private void putPlace(ParkingPlace place) {
         int id = Utils.idstoi(place.getId());
         View placeView = this.view.findViewById(id);
+        placeView.setTag(place.getId());
 
         placeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utils.vibrateClick();
-                Resources res = getResources();
-                showPlaceInfo(v, res.getResourceEntryName(v.getId()));
+                showPlaceInfo(v, v.getTag().toString());
             }
         });
 
         updatePlace(place);
     }
+
 
     private int drawableFromPlace(ParkingPlace place) {
         if (!place.isActive()) return R.drawable.place_inactive;

@@ -44,6 +44,10 @@ public class VehicleActivityList {
         this(db, Utils.getTodays00time(), new Date());
     }
 
+    public VehicleActivityList(Database db, boolean always) {
+        this(db.getAllActivities());
+    }
+
 
     public ArrayList<VehicleActivity> getList() {
         return this.list;
@@ -146,8 +150,8 @@ public class VehicleActivityList {
         while (r >= l) {
             int m = (l + r)/2;
             VehicleActivity a = list.get(m);
-            if      (date.after(a.getDate())) l = m + 1;
-            else if (a.getDate().after(date)) r = m - 1;
+            if      (date.after(a.getDate())) r = m - 1;
+            else if (a.getDate().after(date)) l = m + 1;
             else return a;
         }
 
@@ -189,7 +193,10 @@ public class VehicleActivityList {
      * @param css    Css for the html table
      * @return
      */
-    public String toHtml(String header, String title,  String css) {
+    public String toHtml(String header, String title,  String css, String entriesTxt, String exitsTxt, String minutesTxt) {
+        entriesTxt = entriesTxt.toLowerCase();
+        exitsTxt = exitsTxt.toLowerCase();
+
         StringBuilder builder = new StringBuilder();
 
         builder.append("<!DOCTYPE html>")
@@ -222,8 +229,9 @@ public class VehicleActivityList {
             accYear = cal.get(Calendar.YEAR);
             accMonth = currentMonth = cal.get(Calendar.MONTH);
 
-            int entries, exits, stayTime, income;
-            entries = exits = stayTime = income = 0;
+            double income = 0.0;
+            int entries, exits, stayTime;
+            entries = exits = stayTime = 0;
 
             VehicleActivity va = ini;
             while (i < list.size()) {
@@ -246,11 +254,11 @@ public class VehicleActivityList {
             }
 
             builder.append("<tr>")
-                   .append("<td>").append(Utils.toMonthString(accMonth)).append(" ").append(accYear).append("</td>")
-                   .append("<td>").append(Utils.toEurosValueString(income)).append(" €").append("</td>")
-                   .append("<td>").append(entries).append("</td>")
-                   .append("<td>").append(exits).append("</td>")
-                   .append("<td>").append(stayTime / exits).append("</td>")
+                    .append("<td>").append(Utils.toMonthString(accMonth)).append(" ").append(accYear).append("</td>")
+                    .append("<td>").append(Utils.toEurosValueString(income)).append(" €").append("</td>")
+                    .append("<td>").append(entries).append(" ").append(entriesTxt).append("</td>")
+                    .append("<td>").append(exits).append(" ").append(exitsTxt).append("</td>")
+                    .append("<td>").append(stayTime / exits).append(" ").append(minutesTxt).append("</td>")
                    .append("</tr>");
         }
 

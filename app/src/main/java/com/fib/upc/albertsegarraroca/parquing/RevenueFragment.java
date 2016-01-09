@@ -139,17 +139,17 @@ public class RevenueFragment extends Fragment {
         final TimePicker tp = (TimePicker) dialogView.findViewById(R.id.timePicker);
         final DatePicker dp = (DatePicker) dialogView.findViewById(R.id.datePicker);
 
+        tp.setIs24HourView(true);
+
         Long date = initial ? initialDate : finalDate;
 
         if (date != null) {
             Calendar c = Calendar.getInstance();
             c.setTimeInMillis(date);
-            tp.setCurrentHour(c.get(Calendar.HOUR));
+            tp.setCurrentHour(c.get(Calendar.HOUR_OF_DAY));
             tp.setCurrentMinute(c.get(Calendar.MINUTE));
             dp.updateDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
         }
-
-        tp.setIs24HourView(true);
 
         new AlertDialog.Builder(activity)
                 .setTitle(initial ? R.string.select_initial_date_dialog_title : R.string.select_final_date_dialog_title)
@@ -209,11 +209,19 @@ public class RevenueFragment extends Fragment {
     private void showToday() {
         VehicleActivityList val = new VehicleActivityList(((MainActivity) getActivity()).getDatabase());
 
-        setInitialText(Utils.getTodays00time().getTime());
 
-        setFinalText(new Date().getTime());
+        Date beg = Utils.getTodays00time();
+        setInitialText(beg.getTime());
+        Date now = new Date();
+
+        setFinalText(now.getTime());
+
+        if (initialDate == null) initialDate = beg.getTime();
+        if (finalDate == null) finalDate = now.getTime();
 
         setVehicleActivityList(val);
+
+        if (this.lastSize > 0) Utils.showToast(getString(R.string.showing_today), Toast.LENGTH_SHORT);
     }
 
     private void disableToday() {
@@ -236,6 +244,9 @@ public class RevenueFragment extends Fragment {
         }
 
         setVehicleActivityList(new VehicleActivityList(((MainActivity) getActivity()).getDatabase(), new Date(initialDate), new Date(finalDate)));
+
+        if (this.lastSize > 0) Utils.showToast(getString(R.string.showing_dates).replace("_X_", Utils.formatDateShort(new Date(initialDate))).replace("_Y_", Utils.formatDateShort(new Date(finalDate))),0,3);
+
     }
 
     public void setInitialText(long initialDate) {

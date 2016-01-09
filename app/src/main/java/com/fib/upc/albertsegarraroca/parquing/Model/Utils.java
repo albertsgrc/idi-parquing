@@ -3,8 +3,11 @@ package com.fib.upc.albertsegarraroca.parquing.Model;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.CountDownTimer;
 import android.os.Vibrator;
 import android.widget.Toast;
+
+import com.fib.upc.albertsegarraroca.parquing.R;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -48,9 +51,15 @@ public class Utils {
         return df.format(value);
     }
 
+    public static String capitalize(String s) {
+        if (s != null && s.length() > 0) s = (""+s.charAt(0)).toUpperCase() + s.substring(1);
+        return s;
+    }
+
     public static String toMonthString(int m) {
-        return "";
-        // TODO: Implement
+        Calendar c = Calendar.getInstance();
+        c.set(1995, m, 1);
+        return capitalize(c.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()));
     }
 
     public static String dateToDBString(Date date) {
@@ -83,9 +92,21 @@ public class Utils {
         toast.show();
     }
 
+    public static void showToast(String txt, int len, int dur) {
+        showToast(txt, Toast.LENGTH_SHORT);
+
+        new CountDownTimer(dur*1000, 1000)
+        {
+
+            public void onTick(long millisUntilFinished) {toast.show();}
+            public void onFinish() {toast.show();}
+
+        }.start();
+    }
+
     public static void showAlertDialog(String txt) {
-        AlertDialog d = new AlertDialog.Builder(context).setTitle(context.getString(idstoi("warning")))
-                .setMessage(txt).setPositiveButton(context.getString(idstoi("okay")), null).create();
+        AlertDialog d = new AlertDialog.Builder(context).setTitle(R.string.warning)
+                .setMessage(txt).setPositiveButton(R.string.okay, null).create();
 
         d.show();
     }
@@ -94,7 +115,7 @@ public class Utils {
         return context.getResources().getIdentifier(id, "id", context.getPackageName());
     }
 
-    public static String iditos(int id) {
-        return context.getResources().getResourceEntryName(id);
+    public static String fileTimeStamp() {
+        return new SimpleDateFormat("dd-MM-yyyy-hh-mm").format(new Date());
     }
 }

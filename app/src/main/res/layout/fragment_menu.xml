@@ -10,7 +10,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="false">
 
         <Button
             android:drawableRight="@drawable/ic_delete"
@@ -95,22 +95,8 @@
             android:textAlignment="gravity"
             android:gravity="left|center_vertical"
             android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:layout_marginBottom="35dp" />
+            android:paddingEnd="10dp" />
 
-        <Button
-            android:drawableRight="@drawable/ic_settings"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btnSettings"
-            android:id="@+id/btnSettings"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/button_custom_special"
-            android:textAlignment="gravity"
-            android:gravity="left|center_vertical"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:layout_marginBottom="10dp" />
     </LinearLayout>
 
 </RelativeLayout>

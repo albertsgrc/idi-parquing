@@ -1,9 +1,11 @@
 package com.fib.upc.albertsegarraroca.parquing;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 public class HelpActivity extends Activity {
@@ -12,6 +14,9 @@ public class HelpActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
+        final ActionBar actionBar = getActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
     }
 
 
@@ -20,6 +25,10 @@ public class HelpActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_help, menu);
         return true;
+    }
+
+    public void goBack(View v) {
+        this.finish();
     }
 
     @Override

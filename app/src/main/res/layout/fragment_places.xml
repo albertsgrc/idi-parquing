@@ -112,6 +112,7 @@
                 layout="@layout/place"
                 android:layout_weight="1"
                 android:id="@+id/A1"
+                android:tag="A1"
                 android:layout_marginRight="2dp" />
 
             <include
@@ -120,7 +121,8 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:layout_marginRight="2dp"
-                android:id="@+id/A2" />
+                android:id="@+id/A2"
+                android:tag="A2" />
 
             <include
                 layout="@layout/place"
@@ -128,14 +130,16 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:layout_marginRight="2dp"
-                android:id="@+id/A3" />
+                android:id="@+id/A3"
+                android:tag="A3" />
 
             <include
                 layout="@layout/place"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:id="@+id/A4" />
+                android:id="@+id/A4"
+                android:tag="A4" />
 
         </LinearLayout>
 
@@ -154,6 +158,7 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:id="@+id/B1"
+                android:tag="B1"
                 android:layout_marginRight="2dp" />
 
             <include
@@ -162,7 +167,8 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:layout_marginRight="2dp"
-                android:id="@+id/B2" />
+                android:id="@+id/B2"
+                android:tag="B2"/>
 
             <include
                 layout="@layout/place"
@@ -170,14 +176,16 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:layout_marginRight="2dp"
-                android:id="@+id/B3" />
+                android:id="@+id/B3"
+                android:tag="B3"/>
 
             <include
                 layout="@layout/place"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:id="@+id/B4" />
+                android:id="@+id/B4"
+                android:tag="B4"/>
         </LinearLayout>
 
         <LinearLayout
@@ -195,6 +203,7 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:id="@+id/C1"
+                android:tag="C1"
                 android:layout_marginRight="2dp" />
 
             <include
@@ -203,7 +212,8 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:layout_marginRight="2dp"
-                android:id="@+id/C2" />
+                android:id="@+id/C2"
+                android:tag="C2"/>
 
             <include
                 layout="@layout/place"
@@ -211,14 +221,16 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:layout_marginRight="2dp"
-                android:id="@+id/C3" />
+                android:id="@+id/C3"
+                android:tag="C3"/>
 
             <include
                 layout="@layout/place"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:id="@+id/C4" />
+                android:id="@+id/C4"
+                android:tag="C4"/>
         </LinearLayout>
 
         <LinearLayout
@@ -235,6 +247,7 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:id="@+id/D1"
+                android:tag="D1"
                 android:layout_marginRight="2dp" />
 
             <include
@@ -243,7 +256,8 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:layout_marginRight="2dp"
-                android:id="@+id/D2" />
+                android:id="@+id/D2"
+                android:tag="D2"/>
 
             <include
                 layout="@layout/place"
@@ -251,14 +265,16 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:layout_marginRight="2dp"
-                android:id="@+id/D3" />
+                android:id="@+id/D3"
+                android:tag="D3"/>
 
             <include
                 layout="@layout/place"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:id="@+id/D4" />
+                android:id="@+id/D4"
+                android:tag="D4"/>
         </LinearLayout>
 
     </LinearLayout>

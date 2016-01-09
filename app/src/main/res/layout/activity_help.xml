@@ -1,12 +1,54 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.fib.upc.albertsegarraroca.parquing.HelpActivity">
+    tools:context="com.fib.upc.albertsegarraroca.parquing.HelpActivity"
+    android:background="@color/background">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:background="@color/background_hue"
+        android:id="@+id/relativeLayout">
+
+        <FrameLayout
+            android:layout_width="60dp"
+            android:layout_height="fill_parent"
+            android:background="@drawable/button_custom_transparent"
+            android:clickable="true"
+            android:onClick="goBack">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:id="@+id/imageView6"
+                android:src="@drawable/ic_back"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:clickable="false"
+                android:layout_gravity="center" />
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/btnHelp"
+            android:id="@+id/textView"
+            android:layout_gravity="center_horizontal"
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            android:textAlignment="gravity"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollView"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

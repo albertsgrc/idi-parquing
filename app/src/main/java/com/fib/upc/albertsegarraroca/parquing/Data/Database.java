@@ -204,7 +204,41 @@ public class Database extends SQLiteOpenHelper {
                 c.getInt(c.getColumnIndex("isActive")) != 0);
     }
 
-    public VehicleActivity undoLastActivity(boolean force) throws IllegalStateException {
+    public VehicleActivity getLastActivity() {
+        Cursor cLast = read("SELECT MAX(date) AS lastDate FROM " + VEHICLE_ACTIVITIES_TABLE);
+
+        if (!cLast.moveToFirst()) return null;
+
+        String lastActivityDate = cLast.getString(cLast.getColumnIndex("lastDate"));
+
+        Cursor c = read("SELECT a.*, o.date AS odate, o.vehicle AS ovehicle, o.place AS oplace" +
+                " FROM " + VEHICLE_ACTIVITIES_TABLE + " a LEFT JOIN " +
+                VEHICLE_ACTIVITIES_TABLE + " o ON a.associatedActivity = o.date WHERE a.date = '" + lastActivityDate + "'");
+
+        if (!c.moveToFirst()) return null;
+
+        String vehicle = c.getString(c.getColumnIndex("vehicle"));
+
+        VehicleActivity va;
+        if (vehicle != null) { // is entry
+            va = new VehicleEntry(Utils.dbStringToDate(lastActivityDate), new Vehicle(vehicle),
+                    c.getString(c.getColumnIndex("place")));
+
+        } else { // is exit
+            String entryDateString = c.getString(c.getColumnIndex("odate"));
+            Assert.assertNotNull(entryDateString);
+            Date entryDate = Utils.dbStringToDate(entryDateString);
+            String vehicleIString = c.getString(c.getColumnIndex("ovehicle"));
+            Vehicle vehicleI = new Vehicle(vehicleIString);
+            String placeId = c.getString(c.getColumnIndex("oplace"));
+            VehicleEntry associatedEntry = new VehicleEntry(entryDate, vehicleI, placeId);
+            va = new VehicleExit(Utils.dbStringToDate(lastActivityDate), associatedEntry);
+        }
+
+        return va;
+    }
+
+        public VehicleActivity undoLastActivity(boolean force) throws IllegalStateException {
         Cursor cLast = read("SELECT MAX(date) AS lastDate FROM " + VEHICLE_ACTIVITIES_TABLE);
 
         if (!cLast.moveToFirst()) return null;
@@ -215,7 +249,7 @@ public class Database extends SQLiteOpenHelper {
                         " FROM " + VEHICLE_ACTIVITIES_TABLE + " a LEFT JOIN " +
                     VEHICLE_ACTIVITIES_TABLE + " o ON a.associatedActivity = o.date WHERE a.date = '" + lastActivityDate + "'");
 
-        Assert.assertEquals(c.moveToFirst(), true);
+        if (!c.moveToFirst()) return null;
 
         String vehicle = c.getString(c.getColumnIndex("vehicle"));
 
@@ -304,7 +338,7 @@ public class Database extends SQLiteOpenHelper {
                 "SELECT a.*, o.date AS odate, o.vehicle AS ovehicle, o.place AS oplace, o.income AS oincome" +
                 " FROM " + VEHICLE_ACTIVITIES_TABLE + " a" +
                 " LEFT JOIN " + VEHICLE_ACTIVITIES_TABLE + " o ON a.associatedActivity = o.date" +
-                " WHERE a.date >= '" + beggining + "' AND a.date <= '" + end + "'" +
+                (beggining != null ? " WHERE a.date >= '" + beggining + "' AND a.date <= '" + end + "'" : "") +
                 " ORDER BY a.date DESC");
 
         ArrayList<VehicleActivity> activities = new ArrayList<VehicleActivity>();
@@ -351,5 +385,9 @@ public class Database extends SQLiteOpenHelper {
         c.close();
 
         return new ActivityListInfo(Utils.roundEuros(totalIncome), entries, exits, activities);
+    }
+
+    public ActivityListInfo getAllActivities() {
+        return getActivitiesBetween(null, null);
     }
 }

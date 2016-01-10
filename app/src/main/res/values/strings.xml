@@ -6,7 +6,7 @@
     <string name="type">Type</string>
     <string name="date">Date</string>
     <string name="registration">Registration</string>
-    <string name="benefit">Income</string>
+    <string name="benefit">Revenue</string>
     <string name="entry_date">Entry date</string>
     <string name="exit_date">Exit date</string>
     <string name="occupation">Occupation</string>
@@ -60,7 +60,7 @@
     <string name="undo_entry_complete">Entry successfully undone</string>
     <string name="undo_exit_complete">Exit successfully undone</string>
     <string name="btnSettings">Settings</string>
-    <string name="select_dates">Select a time interval to see its entries/exits and the total income</string>
+    <string name="select_dates">Select a time interval to see its entries/exits and the total revenue</string>
     <string name="select_initial_date_dialog_title">Select the initial date and time</string>
     <string name="select_final_date_dialog_title">Select the final date and time</string>
     <string name="nothing_to_reload">There are no changes</string>

@@ -257,7 +257,7 @@ public class MainActivity extends FragmentActivity {
                     @Override
                     public void onClick(View view) {
                         EditText tv = (EditText) dialog.findViewById(R.id.editRegistration);
-                        final String text = tv.getText().toString();
+                        final String text = tv.getText().toString().trim();
 
                         if (text.isEmpty()) tv.setError(getString(R.string.error_empty_registration));
                         else {
